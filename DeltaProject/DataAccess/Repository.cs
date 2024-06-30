@@ -8,7 +8,7 @@ namespace ContactsEditor_MVVM.DataAccess
 {
   // Definerer typen af hhv. den databaseoperation, der er udført og af hvilket repository.
   public enum DbOperation { SELECT, INSERT, UPDATE, DELETE };
-  public enum DbModeltype { Contact, Zipcodes }
+  public enum DbModeltype { Contact, Zipcodes, Employee }
 
   // EventArgs for en databaseoperation.
   public class DbEventArgs : EventArgs
