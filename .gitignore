@@ -1,5 +1,95 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# .NET
+*.dll
+*.exe
+*.pdb
+*.user
+*.userosscache
+*.sln.docstates
 
-/.vs
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of NuGet restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+
+# Include _published* folders for Web Projects
+**/[Pp]ublished[Aa]pp*/
+
+# Publish Web Output
+*.publishsettings
+
+# Ignore project lock file until NuGet 4.0
+project.lock.json
+# .NET Core
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+StyleCopCache.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Visual Studio 2019/2022
+.vscode/
+.vs/
+.vscode/*
+.vs/*
+*.vcxproj.user
+*.code-workspace
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Microsoft Office temp files
+~$*
+~*.tmp
+*.tmp
+
+# Windows shortcuts
+*.lnk
