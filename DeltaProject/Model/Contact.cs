@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 
-namespace ContactsEditor_MVVM.Model
+namespace DeltaProject.Model
 {
   // Modelklasse for en adresse.
   // Contact implementerer datavalidering, så en adresse skal opfylde:

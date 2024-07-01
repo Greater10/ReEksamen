@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 
 // Denne file indeholder typer til data access laget og specielt basisklassen til et repository.
-namespace ContactsEditor_MVVM.DataAccess
+namespace DeltaProject.DataAccess
 {
   // Definerer typen af hhv. den databaseoperation, der er udført og af hvilket repository.
   public enum DbOperation { SELECT, INSERT, UPDATE, DELETE };

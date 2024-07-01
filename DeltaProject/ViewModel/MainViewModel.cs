@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using ContactsEditor_MVVM.Model;
-using ContactsEditor_MVVM.DataAccess;
-using ContactsEditor_MVVM.View;
+using DeltaProject.Model;
+using DeltaProject.DataAccess;
+using DeltaProject.View;
 
-namespace ContactsEditor_MVVM.ViewModel
+namespace DeltaProject.ViewModel
 {
   public class MainViewModel : ViewModelBase
   {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
-using ContactsEditor_MVVM.ViewModel;
+using DeltaProject.ViewModel;
 
-namespace ContactsEditor_MVVM.View
+namespace DeltaProject.View
 {
   public partial class ZipWindow : Window
   {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
-using ContactsEditor_MVVM.ViewModel;
-using ContactsEditor_MVVM.Model;
+using DeltaProject.ViewModel;
+using DeltaProject.Model;
 
-namespace ContactsEditor_MVVM.View
+namespace DeltaProject.View
 {
   public partial class CreateWindow : Window
   {

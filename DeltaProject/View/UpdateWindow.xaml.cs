@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
-using ContactsEditor_MVVM.Model;
-using ContactsEditor_MVVM.ViewModel;
+using DeltaProject.Model;
+using DeltaProject.ViewModel;
 
-namespace ContactsEditor_MVVM.View
+namespace DeltaProject.View
 {
   public partial class UpdateWindow : Window
   {

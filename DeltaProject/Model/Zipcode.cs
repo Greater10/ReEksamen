@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace ContactsEditor_MVVM.Model
+namespace DeltaProject.Model
 {
   // Modelklasse for et postnummer.
   // Zipcode implementerer datavalidering, så postnummeret skal være en streng på 4 cifre, og bynavnet må ikke være tomt.

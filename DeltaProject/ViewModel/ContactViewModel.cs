@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Input;
 using System.ComponentModel;
-using ContactsEditor_MVVM.Model;
-using ContactsEditor_MVVM.DataAccess;
+using DeltaProject.Model;
+using DeltaProject.DataAccess;
 
-namespace ContactsEditor_MVVM.ViewModel
+namespace DeltaProject.ViewModel
 {
   public class ContactViewModel : ViewModelBase, IDataErrorInfo
   {

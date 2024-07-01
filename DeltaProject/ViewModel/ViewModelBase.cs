@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
 
-namespace ContactsEditor_MVVM.ViewModel
+namespace DeltaProject.ViewModel
 {
   public delegate bool ConfirmMessage(object sender, MessageEventArgs e);
   public delegate void WarningMessage(object sender, MessageEventArgs e);

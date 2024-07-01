@@ -2,10 +2,10 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using ContactsEditor_MVVM.Model;
-using ContactsEditor_MVVM.DataAccess;
+using DeltaProject.Model;
+using DeltaProject.DataAccess;
 
-namespace ContactsEditor_MVVM.ViewModel
+namespace DeltaProject.ViewModel
 {
   public class ZipViewModel : ViewModelBase, IDataErrorInfo
   {

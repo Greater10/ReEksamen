@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ContactsEditor_MVVM.ViewModel;
-using ContactsEditor_MVVM.Model;
+using DeltaProject.ViewModel;
+using DeltaProject.Model;
 
-namespace ContactsEditor_MVVM
+namespace DeltaProject
 {
   public partial class MainWindow : Window
   {

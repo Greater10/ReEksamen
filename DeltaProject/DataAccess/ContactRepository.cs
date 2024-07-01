@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using ContactsEditor_MVVM.Model;
+using DeltaProject.Model;
 
-namespace ContactsEditor_MVVM.DataAccess
+namespace DeltaProject.DataAccess
 {
   public class ContactRepository : Repository, IEnumerable<Contact>
   {
