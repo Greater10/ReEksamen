@@ -55,8 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAccess\DepartmentRepository.cs" />
     <Compile Include="DataAccess\EmployeeRepository.cs" />
+    <Compile Include="DataAccess\LocationRepository.cs" />
+    <Compile Include="DataAccess\TaskRepository.cs" />
+    <Compile Include="DataAccess\TestRepository.cs" />
+    <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Location.cs" />
+    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\Test.cs" />
     <Compile Include="ViewModel\ContactViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
