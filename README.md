@@ -1,4 +1,4 @@
-#Registrering af opgaver#
+**Registrering af opgaver**
 Ansatte på forskellige afdelinger skal kunne registrere, at de har brug for at en prøvetager kommer forbi og tager en eller flere prøver. Det kan dreje sig om:
 
 - Blodprøver
@@ -18,16 +18,16 @@ De ansatte skal yderligere angive:
   - Er det tale om en isolationspatient, da det kræver at prøvetageren ifører sig særligt udstyr
   - Er det en medicinhæft afhængig prøvetagning, hvilket betyder at patienten tager medicin og evt. skal tage sin medicin på bestemte tidspunkter, hvilket påvirker, hvornår prøven tages.
   - 
-#Visning ved klik på opgave#
+**Visning ved klik på opgave**
 Når man trykker på en opgave, kan man se patientens navn, CPR-nummer, stuenummer og evt. sengeplads hvis det er en flersengsstue, hvornår opgaven er bestilt til - altså klokkeslæt, hvem der har bestilt opgaven og telefonnummer til dem/afdelingen.
  
-#Lokationer#
+**Lokationer**
 Aalborg Sygehus har flere lokationer, hvor personalet kan møde ind, og hvor patienter behandles. Det kan dreje sig om:
 - Medicinerhuset
 - Skadestuen
 - Højhuset
  
-#Prøvetager på arbejde#
+**Prøvetager på arbejde**
 Ansatte skal være registreret i systemet, så de kan logge ind. Når den ansatte logger ind, så er det med arbejds-mail, adgangskode og telefonnummer. Telefonnummer er til en arbejdstel eller PDA (nogle kan bruges til opkald), så afdelinger kan kontakte den ansatte hvis noget haster eller hvis en kollega kan se, at der er brug for ekstra hjælp.
 Andre oplysninger om hver ansat: CPR, navn, adresse og privat telefonnummer.
 
@@ -61,7 +61,7 @@ Medicinerhuset
 - 6Ø, apopleksi
 - 2Ø, intermediært
 
-#Farve på opgaver#
+**Farve på opgaver**
 
 Orange
 Øverste orange blok: orange betyder at det er en hasteopgave. Under overskriften med lokationen står, hvad opgaven går ud på, hvilket er en EKG i dette tilfælde. Overstregningerne skjuler patientens navn. Ikonet med sprøjten betyder at opgaven er til prøvetager. Dette system anvendes også til andre opgaver. Når man trykker på opgaven, står der, at det er en hasteopgave.
