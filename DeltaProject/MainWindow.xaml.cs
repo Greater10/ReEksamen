@@ -13,26 +13,26 @@ namespace DeltaProject
     public MainWindow()
     {
       InitializeComponent();
-      DataContext = model;
-      model.WarningHandler += delegate(object sender, MessageEventArgs e) { 
-          MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning); 
-      };
+      //DataContext = model;
+      //model.WarningHandler += delegate(object sender, MessageEventArgs e) { 
+      //    MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning); 
+      //};
     }
 
     private void grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-      if (sender != null)
-      {
-        try
-        {
-          DataGridRow row = sender as DataGridRow;
-          Contact contact = (Contact)row.Item;
-          model.UpdateContact(contact);
-        }
-        catch
-        {
-        }
-      }
+      //if (sender != null)
+      //{
+      //  try
+      //  {
+      //    DataGridRow row = sender as DataGridRow;
+      //    Contact contact = (Contact)row.Item;
+      //    model.UpdateContact(contact);
+      //  }
+      //  catch
+      //  {
+      //  }
+      //}
     }
   }
 }
