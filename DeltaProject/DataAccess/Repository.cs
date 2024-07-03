@@ -8,7 +8,7 @@ namespace DeltaProject.DataAccess
 {
   // Definerer typen af hhv. den databaseoperation, der er udført og af hvilket repository.
   public enum DbOperation { SELECT, INSERT, UPDATE, DELETE };
-  public enum DbModeltype { Contact, Zipcodes, Employee }
+  public enum DbModeltype { Contact, Zipcodes, Employee, Department, Location, Task, Test }
 
   // EventArgs for en databaseoperation.
   public class DbEventArgs : EventArgs

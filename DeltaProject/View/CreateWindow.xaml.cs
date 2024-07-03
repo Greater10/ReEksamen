@@ -2,12 +2,13 @@
 using System.Windows;
 using DeltaProject.ViewModel;
 using DeltaProject.Model;
+using DeltaProject.DataAccess;
 
 namespace DeltaProject.View
 {
   public partial class CreateWindow : Window
   {
-    private ContactViewModel model = new ContactViewModel(new Contact(), MainViewModel.repository);
+    private ContactViewModel model = new ContactViewModel(new Contact(), new ContactRepository());
 
     public CreateWindow()
     {

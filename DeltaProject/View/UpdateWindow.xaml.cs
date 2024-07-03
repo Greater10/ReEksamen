@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using DeltaProject.DataAccess;
 using DeltaProject.Model;
 using DeltaProject.ViewModel;
 
@@ -11,7 +12,7 @@ namespace DeltaProject.View
 
     public UpdateWindow(Contact contact)
     {
-      model = new ContactViewModel(contact, MainViewModel.repository);
+      model = new ContactViewModel(contact, new ContactRepository());
       InitializeComponent();
       model.CloseHandler += delegate(object sender, EventArgs e) { Close(); };
       model.WarningHandler += delegate(object sender, MessageEventArgs e) { 

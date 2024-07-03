@@ -20,18 +20,17 @@ namespace DeltaProject.DataAccess
             return GetEnumerator();
         }
 
-        public void Search(int locationId)
+        public void GetAll()
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT LocationId, Name FROM Location WHERE LocationId = @LocationId", connection);
-                command.Parameters.Add(CreateParam("@LocationId", locationId, SqlDbType.Int));
+                SqlCommand command = new SqlCommand("SELECT LocationId, Name FROM Location", connection);                
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
                 while (reader.Read())
                     list.Add(new Location((int)reader["LocationId"], reader["Name"].ToString()));
-                OnChanged(DbOperation.SELECT, DbModeltype.Contact);
+                OnChanged(DbOperation.SELECT, DbModeltype.Location);
             }
             catch (Exception ex)
             {
@@ -57,7 +56,7 @@ namespace DeltaProject.DataAccess
                     {
                         list.Add(location);
                         list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Contact);
+                        OnChanged(DbOperation.INSERT, DbModeltype.Location);
                         return;
                     }
                     error = string.Format("Location could not be inserted in the database");
@@ -89,7 +88,7 @@ namespace DeltaProject.DataAccess
                     if (command.ExecuteNonQuery() == 1)
                     {
                         UpdateList(location);
-                        OnChanged(DbOperation.UPDATE, DbModeltype.Contact);
+                        OnChanged(DbOperation.UPDATE, DbModeltype.Location);
                         return;
                     }
                     error = string.Format("Location could not be updated");
@@ -128,7 +127,7 @@ namespace DeltaProject.DataAccess
                 if (command.ExecuteNonQuery() == 1)
                 {
                     list.Remove(location);
-                    OnChanged(DbOperation.DELETE, DbModeltype.Contact);
+                    OnChanged(DbOperation.DELETE, DbModeltype.Location);
                     return;
                 }
                 error = string.Format("Location could not be deleted");

@@ -8,7 +8,8 @@ namespace DeltaProject.Model
     {
         public int LocationId { get; set; }
         public string Name { get; set; }
-       
+        public bool IsSelected { get; set; }
+
 
         public Location()
         {
@@ -16,11 +17,11 @@ namespace DeltaProject.Model
            
         }
 
-        public Location(int locationId, string name)
+        public Location(int locationId, string name, bool isSelected = false)
         {
             LocationId = locationId;
             Name = name;
-            
+            IsSelected = isSelected;
         }
 
         // Implement comparison on SocialSecurityNumber
