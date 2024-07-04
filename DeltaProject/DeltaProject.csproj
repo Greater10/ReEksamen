@@ -74,6 +74,9 @@
     <Compile Include="View\CreateWindow.xaml.cs">
       <DependentUpon>CreateWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TasksWindow.xaml.cs">
+      <DependentUpon>TasksWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\CreateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TasksWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
