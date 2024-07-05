@@ -65,10 +65,12 @@
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\Test.cs" />
+    <Compile Include="Utilities\WindowManager.cs" />
     <Compile Include="ViewModel\ContactViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Commands\MessageEventArgs.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModel\TasksViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ZipViewModel.cs" />
     <Compile Include="View\CreateTaskWindow.xaml.cs">

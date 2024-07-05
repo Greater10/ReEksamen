@@ -4,6 +4,7 @@ using DeltaProject.Model;
 using DeltaProject.DataAccess;
 using DeltaProject.View;
 using System.Windows;
+using DeltaProject.Utilities;
 
 namespace DeltaProject.ViewModel
 {
@@ -99,22 +100,8 @@ namespace DeltaProject.ViewModel
                 employeeRepository.ValidateLogin(email, password);
 
                 // Successful login
-                var tasksWindow = new TasksWindow();
-                // TODO
-                // TasksViewModel model = new TasksViewModel();
-                // model.WarningHandler += delegate (object sender, MessageEventArgs e) {
-                //   MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // };
-                // tasksWindow.DataContext = model;
-                //                
-                tasksWindow.Show();
-
-                //var parentWindow = Window.GetWindow(this);
-
-                //if (parentWindow != null)
-                //{
-                //    parentWindow.Close();
-                //}
+                WindowManager.OpenWindow<TasksWindow, TasksViewModel>(new TasksViewModel());
+                WindowManager.CloseWindow<MainWindow>();
             }
             catch (Exception ex)
             {
