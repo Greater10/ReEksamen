@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
 using DeltaProject.Model;
 using DeltaProject.DataAccess;
 using DeltaProject.View;
-using System.Windows;
 using DeltaProject.Utilities;
 
 namespace DeltaProject.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private const string CredentialsFilePath = "credentials.txt";
+
         public RelayCommand LoginCommand { get; private set; }
 
         public static EmployeeRepository employeeRepository = new EmployeeRepository();
         public static LocationRepository locationRepository = new LocationRepository();
 
         private ObservableCollection<Location> locations;
-
         private string email = "";
         private string password = "";
         private string phone = "";
+        private bool rememberMe;
 
         public MainViewModel()
         {
@@ -27,6 +30,7 @@ namespace DeltaProject.ViewModel
             locations = new ObservableCollection<Location>(locationRepository);
             locationRepository.RepositoryChanged += RefreshLocations;
             locationRepository.GetAll();
+            LoadCredentials();
         }
 
         private void RefreshLocations(object sender, DbEventArgs e)
@@ -86,11 +90,24 @@ namespace DeltaProject.ViewModel
             }
         }
 
+        public bool RememberMe
+        {
+            get { return rememberMe; }
+            set
+            {
+                if (rememberMe != value)
+                {
+                    rememberMe = value;
+                    OnPropertyChanged("RememberMe");
+                }
+            }
+        }
+
         private void Clear()
         {
-            email = "";
-            password = "";
-            phone = "";
+            Email = "";
+            Password = "";
+            Phone = "";
         }
 
         private void Login()
@@ -100,6 +117,15 @@ namespace DeltaProject.ViewModel
                 employeeRepository.ValidateLogin(email, password);
 
                 // Successful login
+                if (RememberMe)
+                {
+                    SaveCredentials();
+                }
+                else
+                {
+                    ClearCredentials();
+                }
+
                 WindowManager.OpenWindow<TasksWindow, TasksViewModel>(new TasksViewModel());
                 WindowManager.CloseWindow<MainWindow>();
             }
@@ -113,6 +139,34 @@ namespace DeltaProject.ViewModel
         private bool CanLogin()
         {
             return !(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(phone));
+        }
+
+        private void LoadCredentials()
+        {
+            if (File.Exists(CredentialsFilePath))
+            {
+                var credentials = File.ReadAllLines(CredentialsFilePath);
+                if (credentials.Length == 3)
+                {
+                    Email = credentials[0];
+                    Password = credentials[1];
+                    Phone = credentials[2];
+                    RememberMe = true;
+                }
+            }
+        }
+
+        private void SaveCredentials()
+        {
+            File.WriteAllLines(CredentialsFilePath, new[] { Email, Password, Phone });
+        }
+
+        private void ClearCredentials()
+        {
+            if (File.Exists(CredentialsFilePath))
+            {
+                File.Delete(CredentialsFilePath);
+            }
         }
     }
 }
