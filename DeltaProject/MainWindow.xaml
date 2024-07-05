@@ -24,7 +24,38 @@
             <TextBlock Text="Telefon" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
             <TextBox x:Name="txtPhone" Grid.Row="2" Grid.Column="1" Width="279" HorizontalAlignment="Left" Margin="5,5,0,5" Text="{Binding Phone}"/>
             <TextBlock Text="Vælg arbejdslokationer" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,156,0"/>
-            <DataGrid x:Name="gridLocations" Grid.Row="4" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" ItemsSource="{Binding Locations}" Margin="0,2,0,29" Grid.RowSpan="2" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
+            <DataGrid x:Name="gridLocations" Grid.Row="4" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding Locations}" Margin="0,2,0,29" Grid.RowSpan="2"
+          HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" SelectionMode="Single">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="Vælg" Width="40" Binding="{Binding IsSelected}" CanUserSort="False"/>
                     <DataGridTextColumn Header="Lokationer" Width="280" Binding="{Binding Name}" CanUserSort="False" IsReadOnly="True"/>
