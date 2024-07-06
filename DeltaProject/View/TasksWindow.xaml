@@ -96,19 +96,19 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <!-- Icons with conditional color and tooltips -->
+                                            <!-- Icons with conditional color -->
                                             <fa:ImageAwesome Icon="{Binding HasBlodtest, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Heart'}"
                                                              Foreground="{Binding HasBlodtest, Converter={StaticResource TestTypeToForegroundConverter}}"
-                                                             Width="16" Height="16" Grid.Column="0" Margin="5,0" ToolTip="Blodprøve"/>
+                                                             Width="16" Height="16" Grid.Column="0" Margin="5,0"/>
                                             <fa:ImageAwesome Icon="{Binding HasEKG, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Stethoscope'}"
                                                              Foreground="{Binding HasEKG, Converter={StaticResource TestTypeToForegroundConverter}}"
-                                                             Width="16" Height="16" Grid.Column="1" Margin="5,0" ToolTip="EKG"/>
+                                                             Width="16" Height="16" Grid.Column="1" Margin="5,0"/>
                                             <fa:ImageAwesome Icon="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='File'}"
                                                              Foreground="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToForegroundConverter}}"
-                                                             Width="16" Height="16" Grid.Column="2" Margin="5,0" ToolTip="Glukose-Csv"/>
+                                                             Width="16" Height="16" Grid.Column="2" Margin="5,0"/>
                                             <fa:ImageAwesome Icon="{Binding HasProcPcr, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Medkit'}"
                                                              Foreground="{Binding HasProcPcr, Converter={StaticResource TestTypeToForegroundConverter}}"
-                                                             Width="16" Height="16" Grid.Column="3" Margin="5,0" ToolTip="PROC-PCR"/>
+                                                             Width="16" Height="16" Grid.Column="3" Margin="5,0"/>
                                         </Grid>
                                     </DockPanel>
                                 </StackPanel>
