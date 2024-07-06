@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\TestTypeToIconConverter.cs" />
     <Compile Include="Converters\PriorityToColorConverter.cs" />
     <Compile Include="DataAccess\DepartmentRepository.cs" />
     <Compile Include="DataAccess\EmployeeRepository.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\Test.cs" />
+    <Compile Include="Model\TestType.cs" />
     <Compile Include="Utilities\WindowManager.cs" />
     <Compile Include="ViewModel\ContactViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace DeltaProject.Model
 {
@@ -23,9 +24,18 @@ namespace DeltaProject.Model
         public int DepartmentId { get; set; }
         public int EmployeeId { get; set; }
 
-        // TODO: Properties not part of the database model
+        // Properties not part of the database model
         public string DepartmentName { get; set; }
         public string AssignedEmployeeName { get; set; }
+
+        // List of Tests
+        public List<Test> Tests { get; set; }
+
+        // Boolean properties for test types
+        public bool HasBlodtest => Tests.Any(t => t.TestType == (int)TestType.Bloodtest);
+        public bool HasEKG => Tests.Any(t => t.TestType == (int)TestType.EKG);
+        public bool HasGlukoseCsv => Tests.Any(t => t.TestType == (int)TestType.GlukoseCsv);
+        public bool HasProcPcr => Tests.Any(t => t.TestType == (int)TestType.ProcPcr);
 
         public Task()
         {
@@ -35,9 +45,10 @@ namespace DeltaProject.Model
             Comments = "";
             PatientName = "";
             TaskDate = DateTime.Now;
+            Tests = new List<Test>();
         }
 
-        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int employeeId)
+        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int employeeId, List<Test> tests)
         {
             TaskId = taskId;
             PatientSocialSecurityNumber = patientSocialSecurityNumber;
@@ -55,6 +66,7 @@ namespace DeltaProject.Model
             PatientName = patientName;
             DepartmentId = departmentId;
             EmployeeId = employeeId;
+            Tests = tests ?? new List<Test>();
         }
 
         public override bool Equals(object obj)
@@ -167,4 +179,3 @@ namespace DeltaProject.Model
         }
     }
 }
-

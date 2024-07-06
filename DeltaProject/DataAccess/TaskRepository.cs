@@ -47,7 +47,8 @@ namespace DeltaProject.DataAccess
                         reader["Comments"].ToString(),
                         reader["PatientName"].ToString(),
                         (int)reader["DepartmentId"],
-                        (int)reader["EmployeeId"]
+                        (int)reader["EmployeeId"],
+                        new List<Test>()
                     ));
                 }
                 OnChanged(DbOperation.SELECT, DbModeltype.Contact);
