@@ -7,16 +7,20 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <local:TestTypeToIconConverter x:Key="TestTypeToIconConverter"/>
+        <local:TestTypeToForegroundConverter x:Key="TestTypeToForegroundConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
     <Grid>
         <!-- Main Grid Definitions -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/> <!-- Filters Column -->
-            <ColumnDefinition Width="*"/>   <!-- Task List Column -->
+            <ColumnDefinition Width="200"/>
+            <!-- Filters Column -->
+            <ColumnDefinition Width="*"/>
+            <!-- Task List Column -->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>     <!-- Full Height for content -->
+            <RowDefinition Height="*"/>
+            <!-- Full Height for content -->
         </Grid.RowDefinitions>
 
         <!-- Filters Column -->
@@ -28,7 +32,7 @@
                         <ComboBox ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" Margin="5,3" IsEditable="True" IsReadOnly="True"/>
                     </StackPanel>
                 </GroupBox>
-                
+
                 <!-- Assigned To Filter -->
                 <GroupBox Header="Tildelt til" Margin="0,0,0,10">
                     <StackPanel>
@@ -94,16 +98,16 @@
                                             </Grid.ColumnDefinitions>
                                             <!-- Icons with conditional color and tooltips -->
                                             <fa:ImageAwesome Icon="{Binding HasBlodtest, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Heart'}"
-                                                             Foreground="{Binding HasBlodtest, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Heart'}"
+                                                             Foreground="{Binding HasBlodtest, Converter={StaticResource TestTypeToForegroundConverter}}"
                                                              Width="16" Height="16" Grid.Column="0" Margin="5,0" ToolTip="Blodprøve"/>
                                             <fa:ImageAwesome Icon="{Binding HasEKG, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Stethoscope'}"
-                                                             Foreground="{Binding HasEKG, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Stethoscope'}"
+                                                             Foreground="{Binding HasEKG, Converter={StaticResource TestTypeToForegroundConverter}}"
                                                              Width="16" Height="16" Grid.Column="1" Margin="5,0" ToolTip="EKG"/>
                                             <fa:ImageAwesome Icon="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='File'}"
-                                                             Foreground="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='File'}"
+                                                             Foreground="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToForegroundConverter}}"
                                                              Width="16" Height="16" Grid.Column="2" Margin="5,0" ToolTip="Glukose-Csv"/>
                                             <fa:ImageAwesome Icon="{Binding HasProcPcr, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Medkit'}"
-                                                             Foreground="{Binding HasProcPcr, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Medkit'}"
+                                                             Foreground="{Binding HasProcPcr, Converter={StaticResource TestTypeToForegroundConverter}}"
                                                              Width="16" Height="16" Grid.Column="3" Margin="5,0" ToolTip="PROC-PCR"/>
                                         </Grid>
                                     </DockPanel>
