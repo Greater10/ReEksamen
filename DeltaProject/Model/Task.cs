@@ -23,6 +23,10 @@ namespace DeltaProject.Model
         public int DepartmentId { get; set; }
         public int EmployeeId { get; set; }
 
+        // TODO: Properties not part of the database model
+        public string DepartmentName { get; set; }
+        public string AssignedEmployeeName { get; set; }
+
         public Task()
         {
             PatientSocialSecurityNumber = "";

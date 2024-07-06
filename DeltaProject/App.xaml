@@ -1,8 +1,9 @@
 ﻿<Application x:Class="DeltaProject.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:DeltaProject.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
     </Application.Resources>
 </Application>
