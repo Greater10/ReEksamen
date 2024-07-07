@@ -20,6 +20,28 @@ namespace DeltaProject.DataAccess
             return GetEnumerator();
         }
 
+        public void GetAll()
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SELECT DepartmentId, Name, LocationId FROM Department", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                list.Clear();
+                while (reader.Read())
+                    list.Add(new Department((int)reader["DepartmentId"], reader["Name"].ToString(), (int)reader["LocationId"]));
+                OnChanged(DbOperation.SELECT, DbModeltype.Department);
+            }
+            catch (Exception ex)
+            {
+                throw new DbException("Error in Department repository: " + ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
         public void Search(int departmentId)
         {
             try
@@ -31,7 +53,7 @@ namespace DeltaProject.DataAccess
                 list.Clear();
                 while (reader.Read())
                     list.Add(new Department((int)reader["DepartmentId"], reader["Name"].ToString(), (int)reader["LocationId"]));
-                OnChanged(DbOperation.SELECT, DbModeltype.Contact);
+                OnChanged(DbOperation.SELECT, DbModeltype.Department);
             }
             catch (Exception ex)
             {

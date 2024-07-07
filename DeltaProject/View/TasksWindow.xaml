@@ -15,7 +15,6 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
-            <!-- Increase the width of the first column -->
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
