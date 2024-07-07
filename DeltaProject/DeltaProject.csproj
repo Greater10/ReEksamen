@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolListContainsConverter.cs" />
     <Compile Include="Converters\TestTypeToIconConverter.cs" />
     <Compile Include="Converters\PriorityToColorConverter.cs" />
     <Compile Include="DataAccess\DepartmentRepository.cs" />

@@ -13,7 +13,20 @@ namespace DeltaProject.ViewModel
         public ObservableCollection<string> Departments { get; set; }
         public ObservableCollection<string> AssignedToList { get; set; }
 
+        private ObservableCollection<string> _selectedDepartments;
+        public ObservableCollection<string> SelectedDepartments
+        {
+            get { return _selectedDepartments; }
+            set
+            {
+                _selectedDepartments = value;
+                OnPropertyChanged(nameof(SelectedDepartments));
+                FilterTasks();
+            }
+        }
+
         public ICommand AddTaskCommand { get; set; }
+        public ICommand ResetDepartmentsFilterCommand { get; set; }
 
         public TasksViewModel()
         {
@@ -58,15 +71,36 @@ namespace DeltaProject.ViewModel
                 // Add more tasks as needed...
             };
 
-            Departments = new ObservableCollection<string> { "", "X", "Y", "Z" };
-            AssignedToList = new ObservableCollection<string> { "", "Ikke tildelt", "Alice", "Bob", "Charlie" };
+            Departments = new ObservableCollection<string>
+            {
+                "A1, mave-tarm-kirurgisk",
+                "S1, hjertemedicinsk",
+                "NHH, neuro-, hoved-, halskirurgisk",
+                "O1, ortopædkirurgisk",
+                // Add other departments...
+            };
+            AssignedToList = new ObservableCollection<string> { "Dr. Hansen", "Dr. Nielsen", "Dr. Pedersen", "Dr. Rasmussen" };
+
+            _selectedDepartments = new ObservableCollection<string>();
+            _selectedDepartments.CollectionChanged += (s, e) => FilterTasks();
 
             AddTaskCommand = new RelayCommand(AddTask);
+            ResetDepartmentsFilterCommand = new RelayCommand(ResetDepartmentsFilter);
+        }
+
+        private void FilterTasks()
+        {
+            // Implement task filtering logic based on selected departments
         }
 
         private void AddTask(object parameter)
         {
             // Add task logic
+        }
+
+        private void ResetDepartmentsFilter(object parameter)
+        {
+            SelectedDepartments.Clear();
         }
     }
 }
