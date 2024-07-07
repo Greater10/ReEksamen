@@ -26,8 +26,8 @@ namespace DeltaProject.ViewModel
             }
         }
 
-        private string _selectedAssignedTo;
-        public string SelectedAssignedTo
+        private ObservableCollection<string> _selectedAssignedTo;
+        public ObservableCollection<string> SelectedAssignedTo
         {
             get { return _selectedAssignedTo; }
             set
@@ -43,13 +43,11 @@ namespace DeltaProject.ViewModel
 
         public static DepartmentRepository departmentRepository = new DepartmentRepository();
         public static EmployeeRepository employeeRepository = new EmployeeRepository();
+        public static TaskRepository taskRepository = new TaskRepository();
 
         public TasksViewModel()
         {
-            Tasks = new ObservableCollection<Task>
-            {
-                // Sample tasks here...
-            };
+            Tasks = new ObservableCollection<Task>();
 
             departmentRepository.RepositoryChanged += RefreshDepartments;
             departmentRepository.GetAll();
@@ -57,8 +55,14 @@ namespace DeltaProject.ViewModel
             employeeRepository.RepositoryChanged += RefreshAssignedToList;
             employeeRepository.GetAll();
 
+            taskRepository.RepositoryChanged += RefreshTasks;
+            taskRepository.GetAll();
+
             _selectedDepartments = new ObservableCollection<string>();
             _selectedDepartments.CollectionChanged += (s, e) => FilterTasks();
+
+            _selectedAssignedTo = new ObservableCollection<string>();
+            _selectedAssignedTo.CollectionChanged += (s, e) => FilterTasks();
 
             AddTaskCommand = new RelayCommand(AddTask);
             ResetDepartmentsFilterCommand = new RelayCommand(ResetDepartmentsFilter);
@@ -74,6 +78,12 @@ namespace DeltaProject.ViewModel
         {
             AssignedToList = new ObservableCollection<string>(employeeRepository.Select(em => em.Name));
             OnPropertyChanged(nameof(AssignedToList));
+        }
+
+        private void RefreshTasks(object sender, DbEventArgs e)
+        {
+            Tasks = new ObservableCollection<Task>(taskRepository);
+            OnPropertyChanged(nameof(Tasks));
         }
 
         private void FilterTasks()
