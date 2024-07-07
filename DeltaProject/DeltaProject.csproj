@@ -72,6 +72,7 @@
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestType.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Utilities\WindowManager.cs" />
     <Compile Include="ViewModel\ContactViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

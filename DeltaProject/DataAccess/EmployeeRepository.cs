@@ -8,7 +8,7 @@ namespace DeltaProject.DataAccess
 {
     public class EmployeeRepository : Repository
     {
-        public void ValidateLogin(string workEmail, string password)
+        public Employee ValidateLogin(string workEmail, string password)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace DeltaProject.DataAccess
 
                     OnChanged(DbOperation.SELECT, DbModeltype.Employee);
 
-                    return;
+                    return employee;
                 }
 
                 // Employee does not exist

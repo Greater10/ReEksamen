@@ -4,17 +4,29 @@ using System.Text.RegularExpressions;
 
 namespace DeltaProject.Model
 {
-    public class Location : IDataErrorInfo, IComparable<Location>
+    public class Location : IDataErrorInfo, IComparable<Location>, INotifyPropertyChanged
     {
+        private bool isSelected;
+
         public int LocationId { get; set; }
         public string Name { get; set; }
-        public bool IsSelected { get; set; }
 
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
 
         public Location()
         {
             Name = "";
-           
         }
 
         public Location(int locationId, string name, bool isSelected = false)
@@ -22,6 +34,13 @@ namespace DeltaProject.Model
             LocationId = locationId;
             Name = name;
             IsSelected = isSelected;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // Implement comparison on SocialSecurityNumber
@@ -51,7 +70,7 @@ namespace DeltaProject.Model
 
         // Validering af objektet.
         // Arrayet angiver hvilke properties, der skal valideres.
-        private static readonly string[] validatedProperties = { "Name", "LocationId"};
+        private static readonly string[] validatedProperties = { "Name", "LocationId" };
 
         public bool IsValid
         {
@@ -84,7 +103,6 @@ namespace DeltaProject.Model
             {
                 case "Name": return ValidateName();
                 case "LocationId": return ValidateLocationId();
-               
             }
             return null;
         }
@@ -95,13 +113,10 @@ namespace DeltaProject.Model
             return null;
         }
 
-
         private string ValidateName()
         {
             if (Name == null) return "Name can not be null";
             return null;
         }
-
-       
     }
 }

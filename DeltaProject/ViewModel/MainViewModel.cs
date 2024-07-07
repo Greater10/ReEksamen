@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows;
+using System.Linq;
 using DeltaProject.Model;
 using DeltaProject.DataAccess;
 using DeltaProject.View;
 using DeltaProject.Utilities;
+using DeltaProject.Services;
 
 namespace DeltaProject.ViewModel
 {
@@ -49,6 +50,11 @@ namespace DeltaProject.ViewModel
                     OnPropertyChanged("Locations");
                 }
             }
+        }
+
+        public ObservableCollection<Location> SelectedLocations
+        {
+            get { return new ObservableCollection<Location>(locations.Where(l => l.IsSelected)); }
         }
 
         public string Email
@@ -114,9 +120,16 @@ namespace DeltaProject.ViewModel
         {
             try
             {
-                employeeRepository.ValidateLogin(email, password);
+                var employee = employeeRepository.ValidateLogin(email, password);
+
+                if (employee == null)
+                {
+                    throw new InvalidOperationException("Forkert brugernavn eller kodeord");
+                }
 
                 // Successful login
+                UserService.Instance.Login(employee.EmployeeId, employee.Name, phone, SelectedLocations.Select(l => l.LocationId).ToList());
+
                 if (RememberMe)
                 {
                     SaveCredentials();
