@@ -14,7 +14,8 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
+            <!-- Increase the width of the first column -->
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -45,7 +46,7 @@
 
                 <!-- Assigned To Filter -->
                 <GroupBox Header="Tildelt til" Margin="0,0,0,10">
-                    <ComboBox ItemsSource="{Binding AssignedToList}" SelectedItem="{Binding SelectedAssignedTo}" Margin="5,3" IsEditable="True" IsReadOnly="True" Height="25" Width="170"/>
+                    <ComboBox ItemsSource="{Binding AssignedToList}" SelectedItem="{Binding SelectedAssignedTo}" Margin="5,0,5,0" IsEditable="True" IsReadOnly="True" Height="25"/>
                 </GroupBox>
 
                 <!-- Priority Filter -->
