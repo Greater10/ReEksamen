@@ -75,7 +75,7 @@
     <Compile Include="Model\TestType.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utilities\WindowManager.cs" />
-    <Compile Include="ViewModel\ContactViewModel.cs" />
+    <Compile Include="ViewModel\CreateTaskViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Commands\MessageEventArgs.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
@@ -88,9 +88,6 @@
     <Compile Include="View\TasksWindow.xaml.cs">
       <DependentUpon>TasksWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UpdateWindow.xaml.cs">
-      <DependentUpon>UpdateWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,9 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataAccess\ContactRepository.cs" />
     <Compile Include="DataAccess\Repository.cs" />
-    <Compile Include="DataAccess\ZipcodeRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -114,14 +109,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UpdateWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Contact.cs" />
-    <Compile Include="Model\Zipcode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

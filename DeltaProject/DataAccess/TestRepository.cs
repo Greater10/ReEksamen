@@ -33,7 +33,7 @@ namespace DeltaProject.DataAccess
                 {
                     list.Add(new Test((int)reader[0], (int)reader[1], (int)reader[2]));
                 }
-                OnChanged(DbOperation.SELECT, DbModeltype.Contact);
+                OnChanged(DbOperation.SELECT, DbModeltype.Test);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace DeltaProject.DataAccess
                     test.TestId = newTestId;
                     list.Add(test);
                     list.Sort();
-                    OnChanged(DbOperation.INSERT, DbModeltype.Contact);
+                    OnChanged(DbOperation.INSERT, DbModeltype.Test);
                     return;
                 }
                 catch (Exception ex)
@@ -94,7 +94,7 @@ namespace DeltaProject.DataAccess
                     if (command.ExecuteNonQuery() == 1)
                     {
                         UpdateList(test);
-                        OnChanged(DbOperation.UPDATE, DbModeltype.Contact);
+                        OnChanged(DbOperation.UPDATE, DbModeltype.Test);
                         return;
                     }
                     error = "Test could not be updated";
@@ -139,7 +139,7 @@ namespace DeltaProject.DataAccess
                 if (command.ExecuteNonQuery() == 1)
                 {
                     list.Remove(test);
-                    OnChanged(DbOperation.DELETE, DbModeltype.Contact);
+                    OnChanged(DbOperation.DELETE, DbModeltype.Test);
                     return;
                 }
                 error = "Test could not be deleted";

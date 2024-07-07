@@ -80,7 +80,7 @@ namespace DeltaProject.DataAccess
                     {
                         list.Add(department);
                         list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Contact);
+                        OnChanged(DbOperation.INSERT, DbModeltype.Department);
                         return;
                     }
                     error = string.Format("Department could not be inserted in the database");
@@ -113,7 +113,7 @@ namespace DeltaProject.DataAccess
                     if (command.ExecuteNonQuery() == 1)
                     {
                         UpdateList(department);
-                        OnChanged(DbOperation.UPDATE, DbModeltype.Contact);
+                        OnChanged(DbOperation.UPDATE, DbModeltype.Department);
                         return;
                     }
                     error = string.Format("Department could not be updated");
@@ -153,7 +153,7 @@ namespace DeltaProject.DataAccess
                 if (command.ExecuteNonQuery() == 1)
                 {
                     list.Remove(department);
-                    OnChanged(DbOperation.DELETE, DbModeltype.Contact);
+                    OnChanged(DbOperation.DELETE, DbModeltype.Department);
                     return;
                 }
                 error = string.Format("Department could not be deleted");

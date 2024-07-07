@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Input;
 using DeltaProject.Model;
 using DeltaProject.DataAccess;
+using DeltaProject.Utilities;
+using DeltaProject.View;
 
 namespace DeltaProject.ViewModel
 {
@@ -122,7 +124,7 @@ namespace DeltaProject.ViewModel
             }
         }
 
-        public ICommand AddTaskCommand { get; set; }
+        public ICommand CreateTaskCommand { get; set; }
         public ICommand ResetDepartmentsFilterCommand { get; set; }
 
         public static DepartmentRepository departmentRepository = new DepartmentRepository();
@@ -148,7 +150,7 @@ namespace DeltaProject.ViewModel
             _selectedAssignedTo = new ObservableCollection<string>();
             _selectedAssignedTo.CollectionChanged += (s, e) => FilterTasks();
 
-            AddTaskCommand = new RelayCommand(AddTask);
+            CreateTaskCommand = new RelayCommand(CreateTask);
             ResetDepartmentsFilterCommand = new RelayCommand(ResetDepartmentsFilter);
         }
 
@@ -223,9 +225,9 @@ namespace DeltaProject.ViewModel
             }
         }
 
-        private void AddTask(object parameter)
+        private void CreateTask(object parameter)
         {
-            // Add task logic
+            WindowManager.OpenWindow<CreateTaskWindow, CreateTaskViewModel>(new CreateTaskViewModel());
         }
 
         private void ResetDepartmentsFilter(object parameter)

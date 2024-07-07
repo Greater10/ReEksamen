@@ -1,23 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using DeltaProject.ViewModel;
-using DeltaProject.Model;
-using DeltaProject.DataAccess;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace DeltaProject.View
 {
-  public partial class CreateWindow : Window
-  {
-    private ContactViewModel model = new ContactViewModel(new Contact(), new ContactRepository());
-
-    public CreateWindow()
+    /// <summary>
+    /// Interaction logic for CreateTaskWindow.xaml
+    /// </summary>
+    public partial class CreateTaskWindow : Window
     {
-      InitializeComponent();
-      model.CloseHandler += delegate(object sender, EventArgs e) { Close(); };
-      model.WarningHandler += delegate(object sender, MessageEventArgs e) { 
-          MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning); 
-      };
-      DataContext = model;
-    }    
-  }
+        public CreateTaskWindow()
+        {
+            InitializeComponent();
+        }
+    }
 }

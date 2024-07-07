@@ -82,7 +82,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <Button x:Name="ButtonAddTask" Command="{Binding AddTaskCommand}" Margin="5,10,5,0" Height="40">
+                <Button x:Name="ButtonAddTask" Command="{Binding CreateTaskCommand}" Margin="5,10,5,0" Height="40">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
                         <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
