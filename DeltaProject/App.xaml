@@ -11,5 +11,7 @@
         <conv:TestTypeToIconConverter x:Key="TestTypeToIconConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <conv:BoolListContainsConverter x:Key="BoolListContainsConverter"/>
+        <conv:PriorityConverter x:Key="PriorityConverter"/>
+        <conv:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     </Application.Resources>
 </Application>

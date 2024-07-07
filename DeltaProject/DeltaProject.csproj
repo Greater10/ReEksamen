@@ -59,6 +59,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolListContainsConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\PriorityConverter.cs" />
     <Compile Include="Converters\TestTypeToIconConverter.cs" />
     <Compile Include="Converters\PriorityToColorConverter.cs" />
     <Compile Include="DataAccess\DepartmentRepository.cs" />

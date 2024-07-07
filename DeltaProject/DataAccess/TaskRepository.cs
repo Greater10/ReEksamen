@@ -57,7 +57,7 @@ namespace DeltaProject.DataAccess
                         reader.IsDBNull(reader.GetOrdinal("Comments")) ? null : reader["Comments"].ToString(),
                         reader.IsDBNull(reader.GetOrdinal("PatientName")) ? null : reader["PatientName"].ToString(),
                         reader.IsDBNull(reader.GetOrdinal("DepartmentId")) ? 0 : reader.GetInt32(reader.GetOrdinal("DepartmentId")),
-                        reader.IsDBNull(reader.GetOrdinal("EmployeeId")) ? 0 : reader.GetInt32(reader.GetOrdinal("EmployeeId")),
+                        reader.IsDBNull(reader.GetOrdinal("EmployeeId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                         new List<Test>()
                     );
                     PopulateReferences(task);
@@ -90,7 +90,7 @@ namespace DeltaProject.DataAccess
 
             if (filter.EmployeeIds.Any())
             {
-                filteredTasks = filteredTasks.Where(t => filter.EmployeeIds.Contains(t.EmployeeId));
+                filteredTasks = filteredTasks.Where(t => t.EmployeeId != null && filter.EmployeeIds.Contains((int)t.EmployeeId));
             }
 
             if (filter.Priorities.Any())
@@ -113,9 +113,9 @@ namespace DeltaProject.DataAccess
                 task.Department = departmentRepository.GetById(task.DepartmentId);
             }
 
-            if (task.EmployeeId > 0)
+            if (task.EmployeeId != null)
             {
-                task.AssignedTo = employeeRepository.GetById(task.EmployeeId);
+                task.AssignedTo = employeeRepository.GetById((int)task.EmployeeId);
             }
 
             // Fetch and assign tests
@@ -148,7 +148,7 @@ namespace DeltaProject.DataAccess
                     command.Parameters.Add(CreateParam("@Comments", task.Comments, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@PatientName", task.PatientName, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@DepartmentId", task.DepartmentId, SqlDbType.Int));
-                    command.Parameters.Add(CreateParam("@EmployeeId", task.EmployeeId, SqlDbType.Int));
+                    command.Parameters.Add(CreateParam("@EmployeeId", task.EmployeeId.HasValue ? (object)task.EmployeeId.Value : DBNull.Value, SqlDbType.Int));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)
                     {

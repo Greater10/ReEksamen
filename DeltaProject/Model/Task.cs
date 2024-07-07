@@ -22,7 +22,7 @@ namespace DeltaProject.Model
         public string Comments { get; set; }
         public string PatientName { get; set; }
         public int DepartmentId { get; set; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
 
         // Properties not part of the database model
         public Department Department { get; set; }
@@ -52,7 +52,7 @@ namespace DeltaProject.Model
             Tests = new List<Test>();
         }
 
-        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int employeeId, List<Test> tests)
+        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int? employeeId, List<Test> tests)
         {
             TaskId = taskId;
             PatientSocialSecurityNumber = patientSocialSecurityNumber;

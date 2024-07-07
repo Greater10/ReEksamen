@@ -25,41 +25,43 @@
         <TextBox x:Name="PatientNameTextBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,46,0,0" Width="280" Height="22" Text="{Binding Path=PatientName}" Grid.Column="1" />
 
         <TextBlock Text="Afdeling" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,71,0,0" />
-        <ComboBox x:Name="Department" HorizontalAlignment="Left" Margin="50,71,0,0" VerticalAlignment="Top" Width="155" Height="24" Grid.Column="1"/>
-        <TextBox x:Name="Room" HorizontalAlignment="Left" Margin="210,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="24" Grid.Column="1"/>
+        <ComboBox x:Name="Department" HorizontalAlignment="Left" Margin="50,71,0,0" VerticalAlignment="Top" Width="155" Height="24" Grid.Column="1" 
+                  ItemsSource="{Binding Path=Departments}" SelectedItem="{Binding Path=SelectedDepartment}" />
+        <TextBox x:Name="Room" HorizontalAlignment="Left" Margin="210,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" Height="24" Grid.Column="1" 
+                 Text="{Binding Path=Room}" />
 
         <TextBlock HorizontalAlignment="Left" Margin="15,106,0,0" TextWrapping="Wrap" Text="Isolationspatient" VerticalAlignment="Top" RenderTransformOrigin="0.576,-0.655" Grid.ColumnSpan="2"/>
-        <RadioButton x:Name="IsolationYes" Content="Ja" Margin="50,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
-        <RadioButton x:Name="IsolationNo" Content="Nej" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="109,110,0,0" Grid.Column="1"/>
+        <RadioButton x:Name="IsolationYes" Content="Ja" Margin="50,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Isolated, Mode=TwoWay}" />
+        <RadioButton x:Name="IsolationNo" Content="Nej" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="109,110,0,0" Grid.Column="1" IsChecked="{Binding Path=Isolated, Mode=TwoWay, Converter={StaticResource InverseBooleanConverter}}" />
 
         <TextBlock HorizontalAlignment="Left" Margin="20,146,0,0" TextWrapping="Wrap" Text="Prøver" VerticalAlignment="Top"/>
-        <CheckBox x:Name="BloodTest" Content="Blodprøve" HorizontalAlignment="Left" Margin="50,146,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <CheckBox Content="EKG" HorizontalAlignment="Left" Margin="50,166,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <CheckBox Content="Glukose-CSV" HorizontalAlignment="Left" Margin="50,186,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <CheckBox Content="POCT-PCR" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <CheckBox Content="Særlige OBS" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <CheckBox Content="Medicinafhængig prøvetagning" HorizontalAlignment="Left" Margin="147,166,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-
+        <CheckBox x:Name="BloodTest" Content="Blodprøve" HorizontalAlignment="Left" Margin="50,146,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=BloodTest, Mode=TwoWay}" />
+        <CheckBox Content="EKG" HorizontalAlignment="Left" Margin="50,166,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=EKG, Mode=TwoWay}" />
+        <CheckBox Content="Glukose-CSV" HorizontalAlignment="Left" Margin="50,186,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=GlukoseCSV, Mode=TwoWay}" />
+        <CheckBox Content="POCT-PCR" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=POCTPCR, Mode=TwoWay}" />
+        <CheckBox Content="Særlige OBS" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=SpecialObservation, Mode=TwoWay}" />
+        <CheckBox Content="Medicinafhængig prøvetagning" HorizontalAlignment="Left" Margin="147,166,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=MedicineDependentTest, Mode=TwoWay}" />
 
         <TextBlock Text="Særlige forhold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Grid.ColumnSpan="2" />
         <TextBox x:Name="SpecialMedication" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,235,0,0" Width="155" Height="22" Text="{Binding Path=SpecialMedication}" Grid.Column="1" />
 
         <TextBlock Text="Inaktiv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,280,0,0" />
-        <CheckBox x:Name="Inactive" Content="Inaktiv" HorizontalAlignment="Left" Margin="50,280,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <CheckBox x:Name="Inactive" Content="Inaktiv" HorizontalAlignment="Left" Margin="50,280,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Inactive, Mode=TwoWay}" />
 
         <TextBlock Text="Prioritet" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,301,0,0" />
-        <RadioButton x:Name="PriorityNormal" Content="Normal" HorizontalAlignment="Left" Margin="50,302,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <RadioButton x:Name="PriorityUrgent" Content="Haster" HorizontalAlignment="Left" Margin="121,301,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <RadioButton x:Name="PriorityCritical" Content="Kritisk" HorizontalAlignment="Left" Margin="190,301,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <RadioButton x:Name="PriorityNormal" Content="Normal" HorizontalAlignment="Left" Margin="50,302,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=1}" />
+        <RadioButton x:Name="PriorityUrgent" Content="Haster" HorizontalAlignment="Left" Margin="121,301,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=2}" />
+        <RadioButton x:Name="PriorityCritical" Content="Kritisk" HorizontalAlignment="Left" Margin="190,301,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=3}" />
 
         <TextBlock Text="Bestilt dato" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,322,0,0" Grid.ColumnSpan="2" />
-        <DatePicker x:Name="TaskDate" HorizontalAlignment="Left" Margin="50,322,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-
+        <DatePicker x:Name="TaskDate" HorizontalAlignment="Left" Margin="50,322,0,0" VerticalAlignment="Top" Grid.Column="1" SelectedDate="{Binding Path=TaskDate, Mode=TwoWay}" />
 
         <TextBlock HorizontalAlignment="Left" Margin="20,363,0,0" TextWrapping="Wrap" Text="Kommentar" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox x:Name="Comments" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,363,0,0" Width="280" Height="52" Text="{Binding Path=Comments}" Grid.Column="1" />
 
         <Button Content="Opret" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,429,0,0" Width="70" Height="25" Command="{Binding Path=CreateCommand}" Grid.Column="1" />
-        <Button Content="Anuller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,429,0,0" Width="70" Height="25" Command="{Binding Path=CancelCommand}" Grid.Column="1" />
+        <Button Content="Annuller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,429,0,0" Width="70" Height="25" Command="{Binding Path=CancelCommand}" Grid.Column="1" />
+        <TextBox x:Name="Bed" HorizontalAlignment="Left" Margin="271,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Height="24" Grid.Column="1" 
+            Text="{Binding Bed}" />
     </Grid>
 </Window>
