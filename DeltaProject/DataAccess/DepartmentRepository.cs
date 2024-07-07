@@ -42,7 +42,7 @@ namespace DeltaProject.DataAccess
             }
         }
 
-        public void Search(int departmentId)
+        public Department GetById(int departmentId)
         {
             try
             {
@@ -51,9 +51,9 @@ namespace DeltaProject.DataAccess
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
-                while (reader.Read())
-                    list.Add(new Department((int)reader["DepartmentId"], reader["Name"].ToString(), (int)reader["LocationId"]));
-                OnChanged(DbOperation.SELECT, DbModeltype.Department);
+                if (reader.Read())
+                    return new Department((int)reader["DepartmentId"], reader["Name"].ToString(), (int)reader["LocationId"]);
+                throw new DbException($"No department found with Id {departmentId}");
             }
             catch (Exception ex)
             {

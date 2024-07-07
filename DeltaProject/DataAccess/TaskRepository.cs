@@ -9,6 +9,14 @@ namespace DeltaProject.DataAccess
     public class TaskRepository : Repository, IEnumerable<Task>
     {
         private List<Task> list = new List<Task>();
+        private DepartmentRepository departmentRepository;
+        private EmployeeRepository employeeRepository;
+
+        public TaskRepository()
+        {
+            departmentRepository = new DepartmentRepository();
+            employeeRepository = new EmployeeRepository();
+        }
 
         public IEnumerator<Task> GetEnumerator()
         {
@@ -30,7 +38,7 @@ namespace DeltaProject.DataAccess
                 list.Clear();
                 while (reader.Read())
                 {
-                    list.Add(new Task(
+                    var task = new Task(
                         reader.GetInt32(reader.GetOrdinal("TaskId")),
                         reader.IsDBNull(reader.GetOrdinal("PatientSocialSecurityNumber")) ? null : reader["PatientSocialSecurityNumber"].ToString(),
                         reader.IsDBNull(reader.GetOrdinal("Room")) ? null : reader["Room"].ToString(),
@@ -48,7 +56,9 @@ namespace DeltaProject.DataAccess
                         reader.IsDBNull(reader.GetOrdinal("DepartmentId")) ? 0 : reader.GetInt32(reader.GetOrdinal("DepartmentId")),
                         reader.IsDBNull(reader.GetOrdinal("EmployeeId")) ? 0 : reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                         new List<Test>()
-                    ));
+                    );
+                    PopulateReferences(task);
+                    list.Add(task);
                 }
                 OnChanged(DbOperation.SELECT, DbModeltype.Task);
             }
@@ -62,7 +72,6 @@ namespace DeltaProject.DataAccess
             }
         }
 
-
         public void Search(string socialSecurityNumber)
         {
             try
@@ -74,7 +83,7 @@ namespace DeltaProject.DataAccess
                 list.Clear();
                 while (reader.Read())
                 {
-                    list.Add(new Task(
+                    var task = new Task(
                         reader.GetInt32(reader.GetOrdinal("TaskId")),
                         reader["PatientSocialSecurityNumber"] as string,
                         reader["Room"] as string,
@@ -92,7 +101,9 @@ namespace DeltaProject.DataAccess
                         reader.GetInt32(reader.GetOrdinal("DepartmentId")),
                         reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                         new List<Test>()
-                    ));
+                    );
+                    PopulateReferences(task);
+                    list.Add(task);
                 }
                 OnChanged(DbOperation.SELECT, DbModeltype.Task);
             }
@@ -103,6 +114,19 @@ namespace DeltaProject.DataAccess
             finally
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        private void PopulateReferences(Task task)
+        {
+            if (task.DepartmentId > 0)
+            {
+                task.Department = departmentRepository.GetById(task.DepartmentId);
+            }
+
+            if (task.EmployeeId > 0)
+            {
+                task.AssignedTo = employeeRepository.GetById(task.EmployeeId);
             }
         }
 
@@ -218,6 +242,7 @@ namespace DeltaProject.DataAccess
                     list[i].PatientName = task.PatientName;
                     list[i].DepartmentId = task.DepartmentId;
                     list[i].EmployeeId = task.EmployeeId;
+                    PopulateReferences(list[i]);
                     break;
                 }
         }

@@ -20,6 +20,31 @@ namespace DeltaProject.DataAccess
             return GetEnumerator();
         }
 
+        public Employee GetById(int employeeId)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SELECT EmployeeId, Name, Address, WorkEmail, SocialSecurityNumber, Phone, WorkPhone, Password FROM Employee WHERE EmployeeId = @EmployeeId", connection);
+                command.Parameters.Add(CreateParam("@EmployeeId", employeeId, SqlDbType.Int));
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read()) {
+                    return new Employee((int)reader[0], reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString(), reader[5].ToString(), reader[6].ToString(), reader[7].ToString());
+                }
+
+                throw new DbException($"Employee with id {employeeId} not found");
+            }
+            catch (Exception ex)
+            {
+                throw new DbException("Error in Employee repository: " + ex.Message);
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+
         public void GetAll()
         {
             try

@@ -25,8 +25,12 @@ namespace DeltaProject.Model
         public int EmployeeId { get; set; }
 
         // Properties not part of the database model
-        public string DepartmentName { get; set; }
-        public string AssignedEmployeeName { get; set; }
+        public Department Department { get; set; }
+        public Employee AssignedTo { get; set; }
+
+        // Calculated properties
+        public string DepartmentName => Department?.Name;
+        public string AssignedEmployeeName => AssignedTo?.Name;
 
         // List of Tests
         public List<Test> Tests { get; set; }
