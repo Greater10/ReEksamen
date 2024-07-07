@@ -1,4 +1,4 @@
-﻿<Window x:Class="DeltaProject.View.ZipWindow"
+﻿<Window x:Class="DeltaProject.View.TaskDetailWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="450" Width="460" FontFamily="Verdana" FontSize="12" ResizeMode="NoResize">
@@ -56,7 +56,7 @@
 
         <!-- Footer Section -->
         <Border Background="Gray" Grid.Row="2" Padding="10" HorizontalAlignment="Stretch">
-            <Button Content="BOOK" FontSize="16" Foreground="White" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" Click="Button_Click"/>
+            <Button Content="BOOK" FontSize="16" Foreground="White" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center"/>
         </Border>
     </Grid>
 </Window>

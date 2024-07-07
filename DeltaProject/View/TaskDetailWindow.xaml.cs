@@ -4,11 +4,11 @@ using DeltaProject.ViewModel;
 
 namespace DeltaProject.View
 {
-  public partial class ZipWindow : Window
+  public partial class TaskDetailWindow : Window
   {
-    private ZipViewModel model = new ZipViewModel();
+    private TaskDetailViewModel model = new TaskDetailViewModel();
 
-    public ZipWindow()
+    public TaskDetailWindow()
     {
       InitializeComponent();
       model.WarningHandler += delegate(object sender, MessageEventArgs e) { 

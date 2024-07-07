@@ -81,7 +81,7 @@
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\TasksViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\ZipViewModel.cs" />
+    <Compile Include="ViewModel\TaskDetailViewModel.cs" />
     <Compile Include="View\CreateTaskWindow.xaml.cs">
       <DependentUpon>CreateTaskWindow.xaml</DependentUpon>
     </Compile>
