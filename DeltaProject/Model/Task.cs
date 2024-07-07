@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace DeltaProject.Model
 {
@@ -23,6 +24,23 @@ namespace DeltaProject.Model
         public int DepartmentId { get; set; }
         public int EmployeeId { get; set; }
 
+        // Properties not part of the database model
+        public Department Department { get; set; }
+        public Employee AssignedTo { get; set; }
+
+        // Calculated properties
+        public string DepartmentName => Department?.Name;
+        public string AssignedEmployeeName => AssignedTo?.Name;
+
+        // List of Tests
+        public List<Test> Tests { get; set; }
+
+        // Boolean properties for test types
+        public bool HasBlodtest => Tests.Any(t => t.TestType == (int)TestType.Bloodtest);
+        public bool HasEKG => Tests.Any(t => t.TestType == (int)TestType.EKG);
+        public bool HasGlukoseCsv => Tests.Any(t => t.TestType == (int)TestType.GlukoseCsv);
+        public bool HasProcPcr => Tests.Any(t => t.TestType == (int)TestType.ProcPcr);
+
         public Task()
         {
             PatientSocialSecurityNumber = "";
@@ -31,9 +49,10 @@ namespace DeltaProject.Model
             Comments = "";
             PatientName = "";
             TaskDate = DateTime.Now;
+            Tests = new List<Test>();
         }
 
-        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int employeeId)
+        public Task(int taskId, string patientSocialSecurityNumber, string room, string bed, bool isolated, bool deaf, bool mute, bool inactive, bool foreignLanguage, bool specialMedication, int priority, DateTime taskDate, string comments, string patientName, int departmentId, int employeeId, List<Test> tests)
         {
             TaskId = taskId;
             PatientSocialSecurityNumber = patientSocialSecurityNumber;
@@ -51,19 +70,28 @@ namespace DeltaProject.Model
             PatientName = patientName;
             DepartmentId = departmentId;
             EmployeeId = employeeId;
+            Tests = tests ?? new List<Test>();
         }
 
         public override bool Equals(object obj)
         {
-            try
-            {
-                Task task = (Task)obj;
-                return TaskId.Equals(task.TaskId);
-            }
-            catch
+            // Check if obj is null
+            if (obj == null)
             {
                 return false;
             }
+
+            // Check if obj is of type Task
+            if (!(obj is Task))
+            {
+                return false;
+            }
+
+            // Cast obj to Task
+            Task task = (Task)obj;
+
+            // Compare TaskId
+            return TaskId.Equals(task.TaskId);
         }
 
         public override int GetHashCode()
@@ -163,4 +191,3 @@ namespace DeltaProject.Model
         }
     }
 }
-

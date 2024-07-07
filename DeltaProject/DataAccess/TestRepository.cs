@@ -20,7 +20,7 @@ namespace DeltaProject.DataAccess
             return GetEnumerator();
         }
 
-        public void Search(int taskId)
+        public void GetByTask(int taskId)
         {
             try
             {

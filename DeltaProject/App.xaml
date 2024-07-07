@@ -1,8 +1,15 @@
 ﻿<Application x:Class="DeltaProject.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:DeltaProject"
+             xmlns:conv="clr-namespace:DeltaProject.Converters"
+             StartupUri="MainWindow.xaml"
+             >
     <Application.Resources>
-         
+        <conv:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
+        <conv:TestTypeToForegroundConverter x:Key="TestTypeToForegroundConverter"/>
+        <conv:TestTypeToIconConverter x:Key="TestTypeToIconConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <conv:BoolListContainsConverter x:Key="BoolListContainsConverter"/>
     </Application.Resources>
 </Application>

@@ -1,70 +1,143 @@
 ﻿<Window x:Class="DeltaProject.View.TasksWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DeltaProject.View"
-        mc:Ignorable="d"
-        Title="TasksWindow" Height="450" Width="800">
+        xmlns:local="clr-namespace:DeltaProject.Converters"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        Title="Opgaver" Height="800" Width="1000" FontSize="12"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <!-- Define the VisualBrush as a separate resource -->
-        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
-            <VisualBrush.Visual>
-                <Label Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" 
-                       Foreground="Gray" Padding="3,0,0,0" />
-            </VisualBrush.Visual>
-        </VisualBrush>
-
-        <!-- Define the Style for TextBox with PlaceholderText -->
-        <Style x:Key="PlaceholderTextBox" TargetType="TextBox">
-            <Setter Property="Tag" Value="{Binding PlaceholderText, RelativeSource={RelativeSource Self}}" />
-            <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.WindowBrushKey}}" />
-            <Style.Triggers>
-                <Trigger Property="Text" Value="">
-                    <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
-                </Trigger>
-                <Trigger Property="Text" Value="{x:Null}">
-                    <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <local:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
+        <local:TestTypeToForegroundConverter x:Key="TestTypeToForegroundConverter"/>
+        <local:TestTypeToIconConverter x:Key="TestTypeToIconConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <local:BoolListContainsConverter x:Key="BoolListContainsConverter"/>
     </Window.Resources>
-
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Filter Row with Grid to align with DataGrid columns -->
-        <DataGrid x:Name="FilterGrid" Grid.Row="0" HeadersVisibility="Column" AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Width="*" Header="Name">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox x:Name="NameFilter" Width="150" Margin="5" Tag="Filter by Name" Style="{StaticResource PlaceholderTextBox}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" Header="Age">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox x:Name="AgeFilter" Width="150" Margin="5" Tag="Filter by Age" Style="{StaticResource PlaceholderTextBox}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <!-- Add more DataGridTemplateColumns as needed -->
-            </DataGrid.Columns>
-        </DataGrid>
+        <ScrollViewer Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Department Filter -->
+                <GroupBox Header="Afdeling" Margin="0,0,0,10">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding Departments}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding}" Margin="5,3">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
+                                                <Binding Path="DataContext.SelectedDepartments" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </GroupBox>
 
-        <!-- DataGrid -->
-        <DataGrid x:Name="DataGrid" Grid.Row="2" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="*"/>
-                <!-- Add more columns as needed -->
-            </DataGrid.Columns>
-        </DataGrid>
+                <!-- Assigned To Filter -->
+                <GroupBox Header="Tildelt til" Margin="0,0,0,10">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding AssignedToList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding}" Margin="5,3">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
+                                                <Binding Path="DataContext.SelectedAssignedTo" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Priority Filter -->
+                <GroupBox Header="Prioritet" Margin="0,0,0,10">
+                    <StackPanel>
+                        <CheckBox Content="Normal" Margin="5,3" IsChecked="{Binding FilterPriorityNormal}"/>
+                        <CheckBox Content="Haster" Margin="5,3" IsChecked="{Binding FilterPriorityUrgent}"/>
+                        <CheckBox Content="Kritisk" Margin="5,3" IsChecked="{Binding FilterPriorityCritical}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Tests Filter -->
+                <GroupBox Header="Tests" Margin="0,0,0,10">
+                    <StackPanel>
+                        <CheckBox Content="Blodprøve" Margin="5,3" IsChecked="{Binding FilterBlodtest}"/>
+                        <CheckBox Content="EKG" Margin="5,3" IsChecked="{Binding FilterEKG}"/>
+                        <CheckBox Content="Glukose-Csv" Margin="5,3" IsChecked="{Binding FilterGlukosisCSV}"/>
+                        <CheckBox Content="PROC-PCR" Margin="5,3" IsChecked="{Binding FilterPROCPCR}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <Button x:Name="ButtonAddTask" Command="{Binding AddTaskCommand}" Margin="5,10,5,0" Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
+                        <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+                <ItemsControl ItemsSource="{Binding Tasks}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" Margin="5" Padding="10" CornerRadius="5">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding PatientName}" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding TaskDate, StringFormat='dd/MM/yyyy HH:mm'}" Grid.Column="1" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding DepartmentName}" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Room}" Margin="0,0,0,5"/>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock Text="{Binding AssignedEmployeeName}" FontStyle="Italic" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                        <Grid DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!-- Icons with conditional color -->
+                                            <fa:ImageAwesome Icon="{Binding HasBlodtest, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Heart'}"
+                                                             Foreground="{Binding HasBlodtest, Converter={StaticResource TestTypeToForegroundConverter}}"
+                                                             Width="16" Height="16" Grid.Column="0" Margin="5,0"/>
+                                            <fa:ImageAwesome Icon="{Binding HasEKG, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Stethoscope'}"
+                                                             Foreground="{Binding HasEKG, Converter={StaticResource TestTypeToForegroundConverter}}"
+                                                             Width="16" Height="16" Grid.Column="1" Margin="5,0"/>
+                                            <fa:ImageAwesome Icon="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='File'}"
+                                                             Foreground="{Binding HasGlukoseCsv, Converter={StaticResource TestTypeToForegroundConverter}}"
+                                                             Width="16" Height="16" Grid.Column="2" Margin="5,0"/>
+                                            <fa:ImageAwesome Icon="{Binding HasProcPcr, Converter={StaticResource TestTypeToIconConverter}, ConverterParameter='Medkit'}"
+                                                             Foreground="{Binding HasProcPcr, Converter={StaticResource TestTypeToForegroundConverter}}"
+                                                             Width="16" Height="16" Grid.Column="3" Margin="5,0"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -3,12 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace DeltaProject.DataAccess
 {
     public class TaskRepository : Repository, IEnumerable<Task>
     {
         private List<Task> list = new List<Task>();
+        private DepartmentRepository departmentRepository;
+        private EmployeeRepository employeeRepository;
+        private TestRepository testRepository;
+
+        public TaskRepository()
+        {
+            departmentRepository = new DepartmentRepository();
+            employeeRepository = new EmployeeRepository();
+            testRepository = new TestRepository();
+        }
 
         public IEnumerator<Task> GetEnumerator()
         {
@@ -20,37 +31,39 @@ namespace DeltaProject.DataAccess
             return GetEnumerator();
         }
 
-        public void Search(string socialSecurityNumber)
+        public void GetAll()
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT TaskId, PatientSocialSecurityNumber, Room, Bed, Isolated, Deaf, Mute, Inactive, ForeignLanguage, SpecialMedication, Priority, TaskDate, Comments, PatientName, DepartmentId, EmployeeId FROM Task WHERE PatientSocialSecurityNumber = @PatientSocialSecurityNumber", connection);
-                command.Parameters.Add(CreateParam("@PatientSocialSecurityNumber", socialSecurityNumber, SqlDbType.NVarChar));
+                SqlCommand command = new SqlCommand("SELECT TaskId, PatientSocialSecurityNumber, Room, Bed, Isolated, Deaf, Mute, Inactive, ForeignLanguage, SpecialMedication, Priority, TaskDate, Comments, PatientName, DepartmentId, EmployeeId FROM Task", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
                 while (reader.Read())
                 {
-                    list.Add(new Task(
-                        (int)reader["TaskId"],
-                        reader["PatientSocialSecurityNumber"].ToString(),
-                        reader["Room"].ToString(),
-                        reader["Bed"].ToString(),
-                        (bool)reader["Isolated"],
-                        (bool)reader["Deaf"],
-                        (bool)reader["Mute"],
-                        (bool)reader["Inactive"],
-                        (bool)reader["ForeignLanguage"],
-                        (bool)reader["SpecialMedication"],
-                        (int)reader["Priority"],
-                        (DateTime)reader["TaskDate"],
-                        reader["Comments"].ToString(),
-                        reader["PatientName"].ToString(),
-                        (int)reader["DepartmentId"],
-                        (int)reader["EmployeeId"]
-                    ));
+                    var task = new Task(
+                        reader.GetInt32(reader.GetOrdinal("TaskId")),
+                        reader.IsDBNull(reader.GetOrdinal("PatientSocialSecurityNumber")) ? null : reader["PatientSocialSecurityNumber"].ToString(),
+                        reader.IsDBNull(reader.GetOrdinal("Room")) ? null : reader["Room"].ToString(),
+                        reader.IsDBNull(reader.GetOrdinal("Bed")) ? null : reader["Bed"].ToString(),
+                        reader.IsDBNull(reader.GetOrdinal("Isolated")) ? false : reader.GetBoolean(reader.GetOrdinal("Isolated")),
+                        reader.IsDBNull(reader.GetOrdinal("Deaf")) ? false : reader.GetBoolean(reader.GetOrdinal("Deaf")),
+                        reader.IsDBNull(reader.GetOrdinal("Mute")) ? false : reader.GetBoolean(reader.GetOrdinal("Mute")),
+                        reader.IsDBNull(reader.GetOrdinal("Inactive")) ? false : reader.GetBoolean(reader.GetOrdinal("Inactive")),
+                        reader.IsDBNull(reader.GetOrdinal("ForeignLanguage")) ? false : reader.GetBoolean(reader.GetOrdinal("ForeignLanguage")),
+                        reader.IsDBNull(reader.GetOrdinal("SpecialMedication")) ? false : reader.GetBoolean(reader.GetOrdinal("SpecialMedication")),
+                        reader.IsDBNull(reader.GetOrdinal("Priority")) ? 0 : reader.GetInt32(reader.GetOrdinal("Priority")),
+                        reader.IsDBNull(reader.GetOrdinal("TaskDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("TaskDate")),
+                        reader.IsDBNull(reader.GetOrdinal("Comments")) ? null : reader["Comments"].ToString(),
+                        reader.IsDBNull(reader.GetOrdinal("PatientName")) ? null : reader["PatientName"].ToString(),
+                        reader.IsDBNull(reader.GetOrdinal("DepartmentId")) ? 0 : reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                        reader.IsDBNull(reader.GetOrdinal("EmployeeId")) ? 0 : reader.GetInt32(reader.GetOrdinal("EmployeeId")),
+                        new List<Test>()
+                    );
+                    PopulateReferences(task);
+                    list.Add(task);
                 }
-                OnChanged(DbOperation.SELECT, DbModeltype.Contact);
+                OnChanged(DbOperation.SELECT, DbModeltype.Task);
             }
             catch (Exception ex)
             {
@@ -59,6 +72,57 @@ namespace DeltaProject.DataAccess
             finally
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+        }
+
+        public List<Task> Search(TaskFilter filter)
+        {
+            // Retrieve all tasks
+            GetAll();
+
+            // Apply in-memory filtering
+            var filteredTasks = list.AsQueryable();
+
+            if (filter.DepartmentIds.Any())
+            {
+                filteredTasks = filteredTasks.Where(t => filter.DepartmentIds.Contains(t.DepartmentId));
+            }
+
+            if (filter.EmployeeIds.Any())
+            {
+                filteredTasks = filteredTasks.Where(t => filter.EmployeeIds.Contains(t.EmployeeId));
+            }
+
+            if (filter.Priorities.Any())
+            {
+                filteredTasks = filteredTasks.Where(t => filter.Priorities.Contains(t.Priority));
+            }
+
+            if (filter.TestTypes.Any())
+            {
+                filteredTasks = filteredTasks.Where(t => t.Tests.Any(test => filter.TestTypes.Contains(test.TestType)));
+            }
+
+            return filteredTasks.ToList();
+        }
+
+        private void PopulateReferences(Task task)
+        {
+            if (task.DepartmentId > 0)
+            {
+                task.Department = departmentRepository.GetById(task.DepartmentId);
+            }
+
+            if (task.EmployeeId > 0)
+            {
+                task.AssignedTo = employeeRepository.GetById(task.EmployeeId);
+            }
+
+            // Fetch and assign tests
+            testRepository.GetByTask(task.TaskId);
+            foreach (var test in testRepository)
+            {
+                task.Tests.Add(test);
             }
         }
 
@@ -90,7 +154,7 @@ namespace DeltaProject.DataAccess
                     {
                         list.Add(task);
                         list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Contact);
+                        OnChanged(DbOperation.INSERT, DbModeltype.Task);
                         return;
                     }
                     error = "Task could not be inserted in the database";
@@ -136,7 +200,7 @@ namespace DeltaProject.DataAccess
                     if (command.ExecuteNonQuery() == 1)
                     {
                         UpdateList(task);
-                        OnChanged(DbOperation.UPDATE, DbModeltype.Contact);
+                        OnChanged(DbOperation.UPDATE, DbModeltype.Task);
                         return;
                     }
                     error = "Task could not be updated";
@@ -174,6 +238,7 @@ namespace DeltaProject.DataAccess
                     list[i].PatientName = task.PatientName;
                     list[i].DepartmentId = task.DepartmentId;
                     list[i].EmployeeId = task.EmployeeId;
+                    PopulateReferences(list[i]);
                     break;
                 }
         }
@@ -189,7 +254,7 @@ namespace DeltaProject.DataAccess
                 if (command.ExecuteNonQuery() == 1)
                 {
                     list.Remove(task);
-                    OnChanged(DbOperation.DELETE, DbModeltype.Contact);
+                    OnChanged(DbOperation.DELETE, DbModeltype.Task);
                     return;
                 }
                 error = "Task could not be deleted";
@@ -206,4 +271,3 @@ namespace DeltaProject.DataAccess
         }
     }
 }
-
