@@ -11,11 +11,13 @@ namespace DeltaProject.DataAccess
         private List<Task> list = new List<Task>();
         private DepartmentRepository departmentRepository;
         private EmployeeRepository employeeRepository;
+        private TestRepository testRepository;
 
         public TaskRepository()
         {
             departmentRepository = new DepartmentRepository();
             employeeRepository = new EmployeeRepository();
+            testRepository = new TestRepository();
         }
 
         public IEnumerator<Task> GetEnumerator()
@@ -127,6 +129,13 @@ namespace DeltaProject.DataAccess
             if (task.EmployeeId > 0)
             {
                 task.AssignedTo = employeeRepository.GetById(task.EmployeeId);
+            }
+
+            // Fetch and assign tests
+            testRepository.GetByTask(task.TaskId);
+            foreach (var test in testRepository)
+            {
+                task.Tests.Add(test);
             }
         }
 
