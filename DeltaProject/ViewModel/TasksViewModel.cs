@@ -38,6 +38,90 @@ namespace DeltaProject.ViewModel
             }
         }
 
+        private bool _filterPriorityNormal;
+        public bool FilterPriorityNormal
+        {
+            get { return _filterPriorityNormal; }
+            set
+            {
+                _filterPriorityNormal = value;
+                OnPropertyChanged(nameof(FilterPriorityNormal));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterPriorityUrgent;
+        public bool FilterPriorityUrgent
+        {
+            get { return _filterPriorityUrgent; }
+            set
+            {
+                _filterPriorityUrgent = value;
+                OnPropertyChanged(nameof(FilterPriorityUrgent));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterPriorityCritical;
+        public bool FilterPriorityCritical
+        {
+            get { return _filterPriorityCritical; }
+            set
+            {
+                _filterPriorityCritical = value;
+                OnPropertyChanged(nameof(FilterPriorityCritical));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterBlodtest;
+        public bool FilterBlodtest
+        {
+            get { return _filterBlodtest; }
+            set
+            {
+                _filterBlodtest = value;
+                OnPropertyChanged(nameof(FilterBlodtest));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterEKG;
+        public bool FilterEKG
+        {
+            get { return _filterEKG; }
+            set
+            {
+                _filterEKG = value;
+                OnPropertyChanged(nameof(FilterEKG));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterGlukosisCSV;
+        public bool FilterGlukosisCSV
+        {
+            get { return _filterGlukosisCSV; }
+            set
+            {
+                _filterGlukosisCSV = value;
+                OnPropertyChanged(nameof(FilterGlukosisCSV));
+                FilterTasks();
+            }
+        }
+
+        private bool _filterPROCPCR;
+        public bool FilterPROCPCR
+        {
+            get { return _filterPROCPCR; }
+            set
+            {
+                _filterPROCPCR = value;
+                OnPropertyChanged(nameof(FilterPROCPCR));
+                FilterTasks();
+            }
+        }
+
         public ICommand AddTaskCommand { get; set; }
         public ICommand ResetDepartmentsFilterCommand { get; set; }
 
@@ -88,7 +172,55 @@ namespace DeltaProject.ViewModel
 
         private void FilterTasks()
         {
-            // Implement task filtering logic based on selected departments and assigned to
+            var filter = new TaskFilter();
+
+            // If any department is selected, add the corresponding IDs to the filter
+            if (SelectedDepartments.Any())
+            {
+                filter.DepartmentIds = departmentRepository
+                    .Where(d => SelectedDepartments.Contains(d.Name))
+                    .Select(d => d.DepartmentId)
+                    .ToList();
+            }
+
+            // If any employee is selected, add the corresponding IDs to the filter
+            if (SelectedAssignedTo.Any())
+            {
+                filter.EmployeeIds = employeeRepository
+                    .Where(em => SelectedAssignedTo.Contains(em.Name))
+                    .Select(em => em.EmployeeId)
+                    .ToList();
+            }
+
+            // Apply priority filters
+            if (FilterPriorityNormal)
+            {
+                filter.Priorities.Add(1);
+            }
+            if (FilterPriorityUrgent)
+            {
+                filter.Priorities.Add(2);
+            }
+            if (FilterPriorityCritical)
+            {
+                filter.Priorities.Add(3);
+            }
+
+            // Apply test filters
+            if (FilterBlodtest) filter.TestTypes.Add((int)TestType.Bloodtest);
+            if (FilterEKG) filter.TestTypes.Add((int)TestType.EKG);
+            if (FilterGlukosisCSV) filter.TestTypes.Add((int)TestType.GlukoseCsv);
+            if (FilterPROCPCR) filter.TestTypes.Add((int)TestType.ProcPcr);
+
+            // Use the TaskRepository's Search method to filter tasks based on the criteria
+            var filteredTasks = taskRepository.Search(filter);
+
+            // Update the Tasks collection
+            Tasks.Clear();
+            foreach (var task in filteredTasks)
+            {
+                Tasks.Add(task);
+            }
         }
 
         private void AddTask(object parameter)

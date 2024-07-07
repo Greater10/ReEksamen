@@ -75,15 +75,23 @@ namespace DeltaProject.Model
 
         public override bool Equals(object obj)
         {
-            try
-            {
-                Task task = (Task)obj;
-                return TaskId.Equals(task.TaskId);
-            }
-            catch
+            // Check if obj is null
+            if (obj == null)
             {
                 return false;
             }
+
+            // Check if obj is of type Task
+            if (!(obj is Task))
+            {
+                return false;
+            }
+
+            // Cast obj to Task
+            Task task = (Task)obj;
+
+            // Compare TaskId
+            return TaskId.Equals(task.TaskId);
         }
 
         public override int GetHashCode()

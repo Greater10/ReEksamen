@@ -70,6 +70,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\TaskFilter.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestType.cs" />
     <Compile Include="Services\UserService.cs" />

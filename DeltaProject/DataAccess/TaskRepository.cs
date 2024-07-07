@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace DeltaProject.DataAccess
 {
@@ -74,49 +75,35 @@ namespace DeltaProject.DataAccess
             }
         }
 
-        public void Search(string socialSecurityNumber)
+        public List<Task> Search(TaskFilter filter)
         {
-            try
+            // Retrieve all tasks
+            GetAll();
+
+            // Apply in-memory filtering
+            var filteredTasks = list.AsQueryable();
+
+            if (filter.DepartmentIds.Any())
             {
-                SqlCommand command = new SqlCommand("SELECT TaskId, PatientSocialSecurityNumber, Room, Bed, Isolated, Deaf, Mute, Inactive, ForeignLanguage, SpecialMedication, Priority, TaskDate, Comments, PatientName, DepartmentId, EmployeeId FROM Task WHERE PatientSocialSecurityNumber = @PatientSocialSecurityNumber", connection);
-                command.Parameters.Add(CreateParam("@PatientSocialSecurityNumber", socialSecurityNumber, SqlDbType.NVarChar));
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                list.Clear();
-                while (reader.Read())
-                {
-                    var task = new Task(
-                        reader.GetInt32(reader.GetOrdinal("TaskId")),
-                        reader["PatientSocialSecurityNumber"] as string,
-                        reader["Room"] as string,
-                        reader["Bed"] as string,
-                        reader.GetBoolean(reader.GetOrdinal("Isolated")),
-                        reader.GetBoolean(reader.GetOrdinal("Deaf")),
-                        reader.GetBoolean(reader.GetOrdinal("Mute")),
-                        reader.GetBoolean(reader.GetOrdinal("Inactive")),
-                        reader.GetBoolean(reader.GetOrdinal("ForeignLanguage")),
-                        reader.GetBoolean(reader.GetOrdinal("SpecialMedication")),
-                        reader.GetInt32(reader.GetOrdinal("Priority")),
-                        reader.GetDateTime(reader.GetOrdinal("TaskDate")),
-                        reader["Comments"] as string,
-                        reader["PatientName"] as string,
-                        reader.GetInt32(reader.GetOrdinal("DepartmentId")),
-                        reader.GetInt32(reader.GetOrdinal("EmployeeId")),
-                        new List<Test>()
-                    );
-                    PopulateReferences(task);
-                    list.Add(task);
-                }
-                OnChanged(DbOperation.SELECT, DbModeltype.Task);
+                filteredTasks = filteredTasks.Where(t => filter.DepartmentIds.Contains(t.DepartmentId));
             }
-            catch (Exception ex)
+
+            if (filter.EmployeeIds.Any())
             {
-                throw new DbException("Error in Task repository: " + ex.Message);
+                filteredTasks = filteredTasks.Where(t => filter.EmployeeIds.Contains(t.EmployeeId));
             }
-            finally
+
+            if (filter.Priorities.Any())
             {
-                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                filteredTasks = filteredTasks.Where(t => filter.Priorities.Contains(t.Priority));
             }
+
+            if (filter.TestTypes.Any())
+            {
+                filteredTasks = filteredTasks.Where(t => t.Tests.Any(test => filter.TestTypes.Contains(test.TestType)));
+            }
+
+            return filteredTasks.ToList();
         }
 
         private void PopulateReferences(Task task)
