@@ -20,11 +20,11 @@
         <TextBox x:Name="Room" HorizontalAlignment="Left" Margin="280,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="24"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="15,106,0,0" TextWrapping="Wrap" Text="Isolationspatient" VerticalAlignment="Top" RenderTransformOrigin="0.576,-0.655"/>
-        <RadioButton x:Name="IsolationYes" Content="Ja" Margin="120,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RadioButton_Checked"/>
-        <RadioButton x:Name="IsolationNo" Content="Nej" Canvas.Left="208" Canvas.Top="170" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RadioButton_Checked" Margin="179,110,0,0"/>
+        <RadioButton x:Name="IsolationYes" Content="Ja" Margin="120,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <RadioButton x:Name="IsolationNo" Content="Nej" Canvas.Left="208" Canvas.Top="170" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="179,110,0,0"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="20,146,0,0" TextWrapping="Wrap" Text="Prøver" VerticalAlignment="Top"/>
-        <CheckBox x:Name="" Content="Blodprøve" HorizontalAlignment="Left" Margin="120,146,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Blodprøve" HorizontalAlignment="Left" Margin="120,146,0,0" VerticalAlignment="Top"/>
         <CheckBox Content="EKG" HorizontalAlignment="Left" Margin="120,166,0,0" VerticalAlignment="Top"/>
         <CheckBox Content="Glukose-CSV" HorizontalAlignment="Left" Margin="120,186,0,0" VerticalAlignment="Top"/>
         <CheckBox Content="POCT-PCR" HorizontalAlignment="Left" Margin="120,206,0,0" VerticalAlignment="Top"/>
