@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using DeltaProject.Model;
 using DeltaProject.DataAccess;
 using DeltaProject.Utilities;
+using DeltaProject.Services;
 using DeltaProject.View;
 
 namespace DeltaProject.ViewModel
@@ -156,8 +156,7 @@ namespace DeltaProject.ViewModel
 
         private void RefreshDepartments(object sender, DbEventArgs e)
         {
-            Departments = new ObservableCollection<string>(departmentRepository.Select(d => d.Name));
-            OnPropertyChanged(nameof(Departments));
+            FilterDepartments();
         }
 
         private void RefreshAssignedToList(object sender, DbEventArgs e)
@@ -170,6 +169,27 @@ namespace DeltaProject.ViewModel
         {
             Tasks = new ObservableCollection<Task>(taskRepository);
             OnPropertyChanged(nameof(Tasks));
+        }
+
+        private void FilterDepartments()
+        {
+            var selectedLocationIds = UserService.Instance.SelectedLocationIds;
+
+            if (selectedLocationIds.Any())
+            {
+                var filteredDepartments = departmentRepository
+                    .Where(d => selectedLocationIds.Contains(d.LocationId))
+                    .Select(d => d.Name)
+                    .ToList();
+
+                Departments = new ObservableCollection<string>(filteredDepartments);
+                OnPropertyChanged(nameof(Departments));
+            }
+            else
+            {
+                Departments = new ObservableCollection<string>(departmentRepository.Select(d => d.Name));
+                OnPropertyChanged(nameof(Departments));
+            }
         }
 
         private void FilterTasks()
