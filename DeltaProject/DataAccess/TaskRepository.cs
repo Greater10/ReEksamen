@@ -133,7 +133,7 @@ namespace DeltaProject.DataAccess
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Task (PatientSocialSecurityNumber, Room, Bed, Isolated, Deaf, Mute, Inactive, ForeignLanguage, SpecialMedication, Priority, TaskDate, Comments, PatientName, DepartmentId, EmployeeId) VALUES (@PatientSocialSecurityNumber, @Room, @Bed, @Isolated, @Deaf, @Mute, @Inactive, @ForeignLanguage, @SpecialMedication, @Priority, @TaskDate, @Comments, @PatientName, @DepartmentId, @EmployeeId)", connection);
+                    SqlCommand command = new SqlCommand("INSERT INTO Task (PatientSocialSecurityNumber, Room, Bed, Isolated, Deaf, Mute, Inactive, ForeignLanguage, SpecialMedication, Priority, TaskDate, Comments, PatientName, DepartmentId, EmployeeId) VALUES (@PatientSocialSecurityNumber, @Room, @Bed, @Isolated, @Deaf, @Mute, @Inactive, @ForeignLanguage, @SpecialMedication, @Priority, @TaskDate, @Comments, @PatientName, @DepartmentId, @EmployeeId); SELECT SCOPE_IDENTITY()", connection);
                     command.Parameters.Add(CreateParam("@PatientSocialSecurityNumber", task.PatientSocialSecurityNumber, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Room", task.Room, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Bed", task.Bed, SqlDbType.NVarChar));
@@ -150,14 +150,20 @@ namespace DeltaProject.DataAccess
                     command.Parameters.Add(CreateParam("@DepartmentId", task.DepartmentId, SqlDbType.Int));
                     command.Parameters.Add(CreateParam("@EmployeeId", task.EmployeeId.HasValue ? (object)task.EmployeeId.Value : DBNull.Value, SqlDbType.Int));
                     connection.Open();
-                    if (command.ExecuteNonQuery() == 1)
+                    int newTaskId = Convert.ToInt32(command.ExecuteScalar());
+                    task.TaskId = newTaskId;
+
+                    // Add tests
+                    foreach (var test in task.Tests)
                     {
-                        list.Add(task);
-                        list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Task);
-                        return;
+                        test.TaskId = newTaskId;
+                        testRepository.Add(test);
                     }
-                    error = "Task could not be inserted in the database";
+
+                    list.Add(task);
+                    list.Sort();
+                    OnChanged(DbOperation.INSERT, DbModeltype.Task);
+                    return;
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +174,10 @@ namespace DeltaProject.DataAccess
                     if (connection != null && connection.State == ConnectionState.Open) connection.Close();
                 }
             }
-            else error = "Illegal value for task";
+            else
+            {
+                error = "Illegal value for task";
+            }
             throw new DbException("Error in Task repository: " + error);
         }
 
@@ -195,10 +204,27 @@ namespace DeltaProject.DataAccess
                     command.Parameters.Add(CreateParam("@Comments", task.Comments, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@PatientName", task.PatientName, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@DepartmentId", task.DepartmentId, SqlDbType.Int));
-                    command.Parameters.Add(CreateParam("@EmployeeId", task.EmployeeId, SqlDbType.Int));
+                    command.Parameters.Add(CreateParam("@EmployeeId", task.EmployeeId.HasValue ? (object)task.EmployeeId.Value : DBNull.Value, SqlDbType.Int));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)
                     {
+                        // Update tests
+                        var existingTests = testRepository.Where(t => t.TaskId == task.TaskId).ToList();
+                        foreach (var test in task.Tests)
+                        {
+                            if (!existingTests.Any(t => t.TestType == test.TestType))
+                            {
+                                testRepository.Add(test);
+                            }
+                        }
+                        foreach (var test in existingTests)
+                        {
+                            if (!task.Tests.Any(t => t.TestType == test.TestType))
+                            {
+                                testRepository.Remove(test);
+                            }
+                        }
+
                         UpdateList(task);
                         OnChanged(DbOperation.UPDATE, DbModeltype.Task);
                         return;
@@ -214,13 +240,17 @@ namespace DeltaProject.DataAccess
                     if (connection != null && connection.State == ConnectionState.Open) connection.Close();
                 }
             }
-            else error = "Illegal value for task";
+            else
+            {
+                error = "Illegal value for task";
+            }
             throw new DbException("Error in Task repository: " + error);
         }
 
         private void UpdateList(Task task)
         {
             for (int i = 0; i < list.Count; ++i)
+            {
                 if (list[i].TaskId.Equals(task.TaskId))
                 {
                     list[i].PatientSocialSecurityNumber = task.PatientSocialSecurityNumber;
@@ -241,6 +271,7 @@ namespace DeltaProject.DataAccess
                     PopulateReferences(list[i]);
                     break;
                 }
+            }
         }
 
         public void Remove(Task task)
@@ -253,6 +284,13 @@ namespace DeltaProject.DataAccess
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
                 {
+                    // Remove tests
+                    var existingTests = testRepository.Where(t => t.TaskId == task.TaskId).ToList();
+                    foreach (var test in existingTests)
+                    {
+                        testRepository.Remove(test);
+                    }
+
                     list.Remove(task);
                     OnChanged(DbOperation.DELETE, DbModeltype.Task);
                     return;

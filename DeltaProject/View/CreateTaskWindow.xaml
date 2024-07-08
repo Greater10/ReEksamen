@@ -61,8 +61,8 @@
         <TextBlock Text="Prøver" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Margin="5,5,5,0" Height="16"/>
         <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,10,5,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -73,25 +73,26 @@
             <CheckBox x:Name="BloodTestCheckBox" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Path=BloodTest, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="Blodprøve" TextWrapping="Wrap"/>
             </CheckBox>
-            <CheckBox x:Name="EKGCheckBox" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Path=EKG, Mode=TwoWay}" Margin="0,0,5,0">
+            <CheckBox x:Name="EKGCheckBox" Grid.Row="1" Grid.Column="0" IsChecked="{Binding Path=EKG, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="EKG" TextWrapping="Wrap"/>
             </CheckBox>
-            <CheckBox x:Name="GlukoseCSVCheckBox" Grid.Row="1" Grid.Column="0" IsChecked="{Binding Path=GlukoseCSV, Mode=TwoWay}" Margin="0,0,5,0">
+            <CheckBox x:Name="GlukoseCSVCheckBox" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Path=GlukoseCSV, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="Glukose-CSV" TextWrapping="Wrap"/>
             </CheckBox>
-            <CheckBox x:Name="POCTPCRCheckBox" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=POCTPCR, Mode=TwoWay}" Margin="0,0,5,0">
+            <CheckBox x:Name="POCTPCRCheckBox" Grid.Row="3" Grid.Column="0" IsChecked="{Binding Path=POCTPCR, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="POCT-PCR" TextWrapping="Wrap"/>
             </CheckBox>
-            <CheckBox x:Name="SpecialObservationCheckBox" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Path=SpecialObservation, Mode=TwoWay}" Margin="0,0,5,0">
+            <CheckBox x:Name="SpecialObservationCheckBox" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Path=SpecialObservation, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="Særlige OBS" TextWrapping="Wrap"/>
             </CheckBox>
-            <CheckBox x:Name="MedicineDependentTestCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Path=MedicineDependentTest, Mode=TwoWay}" Margin="0,0,5,0">
+            <CheckBox x:Name="MedicineDependentTestCheckBox" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=MedicineDependentTest, Mode=TwoWay}" Margin="0,0,5,0">
                 <TextBlock Text="Medicinafhængig prøvetagning" TextWrapping="Wrap"/>
             </CheckBox>
         </Grid>
 
         <!-- Special Medication -->
-        <CheckBox x:Name="SpecialMedicationCheckBox" Content="Særlige forhold" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,5,0" IsChecked="{Binding Path=SpecialMedication}" Height="15" />
+        <TextBlock Text="Særlige forhold" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <CheckBox x:Name="SpecialMedicationCheckBox" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,5,5,5" IsChecked="{Binding Path=SpecialMedication}" Height="15" />
 
         <!-- Inactive -->
         <TextBlock Text="Inaktiv" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>

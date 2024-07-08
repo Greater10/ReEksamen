@@ -48,7 +48,7 @@ namespace DeltaProject.Model
         }
 
         // Validation properties
-        private static readonly string[] validatedProperties = { "TestId", "TestType", "TaskId" };
+        private static readonly string[] validatedProperties = { "TestType", "TaskId" };
 
         public bool IsValid
         {
@@ -85,17 +85,10 @@ namespace DeltaProject.Model
         {
             switch (name)
             {
-                case "TestId": return ValidateTestId();
                 case "TestType": return ValidateTestType();
                 case "TaskId": return ValidateTaskId();
                 default: return null;
             }
-        }
-
-        private string ValidateTestId()
-        {
-            if (TestId <= 0) return "TestId must be a positive number";
-            return null;
         }
 
         private string ValidateTestType()

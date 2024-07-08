@@ -43,6 +43,7 @@ namespace DeltaProject.Model
 
         public Task()
         {
+            Priority = 1;
             PatientSocialSecurityNumber = "";
             Room = "";
             Bed = "";
