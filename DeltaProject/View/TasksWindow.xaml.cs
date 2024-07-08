@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DeltaProject.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DeltaProject.View
 {
-    /// <summary>
-    /// Interaction logic for TasksWindow.xaml
-    /// </summary>
     public partial class TasksWindow : Window
     {
         public TasksWindow()
         {
             InitializeComponent();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as TasksViewModel;
+            if (viewModel != null)
+            {
+                viewModel.SelectedAssignedTo.Clear();
+                foreach (var item in ((ListBox)sender).SelectedItems)
+                {
+                    viewModel.SelectedAssignedTo.Add(item.ToString());
+                }
+            }
         }
     }
 }

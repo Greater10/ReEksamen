@@ -53,20 +53,14 @@
                 <!-- Assigned To Filter -->
                 <GroupBox Header="Tildelt til" Margin="0,0,0,10">
                     <StackPanel>
-                        <ItemsControl ItemsSource="{Binding AssignedToList}">
-                            <ItemsControl.ItemTemplate>
+                        <ListBox ItemsSource="{Binding AssignedToList}" SelectionMode="Multiple" SelectionChanged="ListBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding}" Margin="5,3">
-                                        <CheckBox.IsChecked>
-                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
-                                                <Binding Path="DataContext.SelectedAssignedTo" RelativeSource="{RelativeSource AncestorType=Window}"/>
-                                                <Binding Path="."/>
-                                            </MultiBinding>
-                                        </CheckBox.IsChecked>
-                                    </CheckBox>
+                                    <CheckBox Content="{Binding}" 
+                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </GroupBox>
 
@@ -76,13 +70,10 @@
                         <ItemsControl ItemsSource="{Binding Departments}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding}" Margin="5,3">
-                                        <CheckBox.IsChecked>
-                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
-                                                <Binding Path="DataContext.SelectedDepartments" RelativeSource="{RelativeSource AncestorType=Window}"/>
-                                                <Binding Path="."/>
-                                            </MultiBinding>
-                                        </CheckBox.IsChecked>
+                                    <CheckBox Content="{Binding}" Margin="5,3" 
+                                              IsChecked="{Binding Path=DataContext.SelectedDepartments, 
+                                                                  RelativeSource={RelativeSource AncestorType=Window}, 
+                                                                  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     </CheckBox>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
