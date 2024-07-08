@@ -24,7 +24,7 @@ namespace DeltaProject.DataAccess
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT LocationId, Name FROM Location", connection);                
+                SqlCommand command = new SqlCommand("SELECT LocationId, Name FROM Location ORDER BY Name", connection);                
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();

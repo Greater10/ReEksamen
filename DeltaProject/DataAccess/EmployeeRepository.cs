@@ -49,7 +49,7 @@ namespace DeltaProject.DataAccess
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT EmployeeId, Name, Address, WorkEmail, SocialSecurityNumber, Phone, WorkPhone, Password FROM Employee", connection);
+                SqlCommand command = new SqlCommand("SELECT EmployeeId, Name, Address, WorkEmail, SocialSecurityNumber, Phone, WorkPhone, Password FROM Employee ORDER BY Name", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
