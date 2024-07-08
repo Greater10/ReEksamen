@@ -151,7 +151,7 @@ namespace DeltaProject.ViewModel
 
         private bool CanLogin()
         {
-            return !(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(phone));
+            return !(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(phone) || !SelectedLocations.Any());
         }
 
         private void LoadCredentials()
