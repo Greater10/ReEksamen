@@ -23,23 +23,30 @@
 
         <ScrollViewer Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <!-- Department Filter -->
-                <GroupBox Header="Afdeling" Margin="0,0,0,10">
+                <!-- Create Task Button -->
+                <Button x:Name="ButtonAddTask" Command="{Binding CreateTaskCommand}" Margin="5,10,5,10" Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
+                        <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Priority Filter -->
+                <GroupBox Header="Prioritet" Margin="0,0,0,10">
                     <StackPanel>
-                        <ItemsControl ItemsSource="{Binding Departments}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox Content="{Binding}" Margin="5,3">
-                                        <CheckBox.IsChecked>
-                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
-                                                <Binding Path="DataContext.SelectedDepartments" RelativeSource="{RelativeSource AncestorType=Window}"/>
-                                                <Binding Path="."/>
-                                            </MultiBinding>
-                                        </CheckBox.IsChecked>
-                                    </CheckBox>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <CheckBox Content="Normal" Margin="5,3" IsChecked="{Binding FilterPriorityNormal}"/>
+                        <CheckBox Content="Haster" Margin="5,3" IsChecked="{Binding FilterPriorityUrgent}"/>
+                        <CheckBox Content="Kritisk" Margin="5,3" IsChecked="{Binding FilterPriorityCritical}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Tests Filter -->
+                <GroupBox Header="Tests" Margin="0,0,0,10">
+                    <StackPanel>
+                        <CheckBox Content="Blodprøve" Margin="5,3" IsChecked="{Binding FilterBlodtest}"/>
+                        <CheckBox Content="EKG" Margin="5,3" IsChecked="{Binding FilterEKG}"/>
+                        <CheckBox Content="Glukose-Csv" Margin="5,3" IsChecked="{Binding FilterGlukosisCSV}"/>
+                        <CheckBox Content="PROC-PCR" Margin="5,3" IsChecked="{Binding FilterPROCPCR}"/>
                     </StackPanel>
                 </GroupBox>
 
@@ -63,31 +70,25 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Priority Filter -->
-                <GroupBox Header="Prioritet" Margin="0,0,0,10">
+                <!-- Department Filter -->
+                <GroupBox Header="Afdeling" Margin="0,0,0,10">
                     <StackPanel>
-                        <CheckBox Content="Normal" Margin="5,3" IsChecked="{Binding FilterPriorityNormal}"/>
-                        <CheckBox Content="Haster" Margin="5,3" IsChecked="{Binding FilterPriorityUrgent}"/>
-                        <CheckBox Content="Kritisk" Margin="5,3" IsChecked="{Binding FilterPriorityCritical}"/>
+                        <ItemsControl ItemsSource="{Binding Departments}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding}" Margin="5,3">
+                                        <CheckBox.IsChecked>
+                                            <MultiBinding Converter="{StaticResource BoolListContainsConverter}">
+                                                <Binding Path="DataContext.SelectedDepartments" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </GroupBox>
-
-                <!-- Tests Filter -->
-                <GroupBox Header="Tests" Margin="0,0,0,10">
-                    <StackPanel>
-                        <CheckBox Content="Blodprøve" Margin="5,3" IsChecked="{Binding FilterBlodtest}"/>
-                        <CheckBox Content="EKG" Margin="5,3" IsChecked="{Binding FilterEKG}"/>
-                        <CheckBox Content="Glukose-Csv" Margin="5,3" IsChecked="{Binding FilterGlukosisCSV}"/>
-                        <CheckBox Content="PROC-PCR" Margin="5,3" IsChecked="{Binding FilterPROCPCR}"/>
-                    </StackPanel>
-                </GroupBox>
-
-                <Button x:Name="ButtonAddTask" Command="{Binding CreateTaskCommand}" Margin="5,10,5,0" Height="40">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
-                        <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
             </StackPanel>
         </ScrollViewer>
 
