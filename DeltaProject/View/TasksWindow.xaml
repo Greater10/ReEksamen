@@ -19,146 +19,151 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <!-- Create Task Button -->
-                <Button x:Name="ButtonAddTask" Command="{Binding CreateTaskCommand}" Margin="5,10,5,10" Height="40">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
-                        <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+        <StackPanel Grid.Column="0" Margin="10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Create Task Button -->
+                    <Button x:Name="ButtonAddTask" Command="{Binding CreateTaskCommand}" Margin="5,10,5,10" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:ImageAwesome Icon="Plus" Width="16" Height="16" VerticalAlignment="Center"/>
+                            <TextBlock Text=" Tilføj Opgave" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
-                <!-- Priority Filter -->
-                <GroupBox Header="Prioritet" Margin="0,0,0,10">
-                    <StackPanel>
-                        <CheckBox Content="Normal" Margin="5,3" IsChecked="{Binding FilterPriorityNormal}"/>
-                        <CheckBox Content="Haster" Margin="5,3" IsChecked="{Binding FilterPriorityUrgent}"/>
-                        <CheckBox Content="Kritisk" Margin="5,3" IsChecked="{Binding FilterPriorityCritical}"/>
-                    </StackPanel>
-                </GroupBox>
+                    <!-- Priority Filter -->
+                    <GroupBox Header="Prioritet" Margin="0,0,0,10">
+                        <StackPanel>
+                            <CheckBox Content="Normal" Margin="5,3" IsChecked="{Binding FilterPriorityNormal}"/>
+                            <CheckBox Content="Haster" Margin="5,3" IsChecked="{Binding FilterPriorityUrgent}"/>
+                            <CheckBox Content="Kritisk" Margin="5,3" IsChecked="{Binding FilterPriorityCritical}"/>
+                        </StackPanel>
+                    </GroupBox>
 
-                <!-- Tests Filter -->
-                <GroupBox Header="Tests" Margin="0,0,0,10">
-                    <StackPanel>
-                        <CheckBox Content="Blodprøve" Margin="5,3" IsChecked="{Binding FilterBlodtest}"/>
-                        <CheckBox Content="EKG" Margin="5,3" IsChecked="{Binding FilterEKG}"/>
-                        <CheckBox Content="Glukose-Csv" Margin="5,3" IsChecked="{Binding FilterGlukosisCSV}"/>
-                        <CheckBox Content="PROC-PCR" Margin="5,3" IsChecked="{Binding FilterPROCPCR}"/>
-                    </StackPanel>
-                </GroupBox>
+                    <!-- Tests Filter -->
+                    <GroupBox Header="Tests" Margin="0,0,0,10">
+                        <StackPanel>
+                            <CheckBox Content="Blodprøve" Margin="5,3" IsChecked="{Binding FilterBlodtest}"/>
+                            <CheckBox Content="EKG" Margin="5,3" IsChecked="{Binding FilterEKG}"/>
+                            <CheckBox Content="Glukose-Csv" Margin="5,3" IsChecked="{Binding FilterGlukosisCSV}"/>
+                            <CheckBox Content="PROC-PCR" Margin="5,3" IsChecked="{Binding FilterPROCPCR}"/>
+                        </StackPanel>
+                    </GroupBox>
 
-                <!-- Assigned To Filter -->
-                <GroupBox Header="Tildelt til" Margin="0,0,0,10">
-                    <StackPanel>
-                        <ListBox ItemsSource="{Binding AssignedToList}" SelectionMode="Multiple" SelectionChanged="ListBox_SelectionChanged">
-                            <ListBox.Style>
-                                <Style TargetType="ListBox">
-                                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBox">
-                                                <ScrollViewer>
-                                                    <ItemsPresenter />
-                                                </ScrollViewer>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListBox.Style>
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <ContentPresenter />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox Content="{Binding}" 
+                    <!-- Assigned To Filter -->
+                    <GroupBox Header="Tildelt til" Margin="0,0,0,10">
+                        <StackPanel>
+                            <ListBox ItemsSource="{Binding AssignedToList}" SelectionMode="Multiple" SelectionChanged="ListBox_SelectionChanged">
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <ScrollViewer>
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.Style>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Margin" Value="0,2,0,2"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <ContentPresenter />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding}" 
                               Margin="5,2,0,2"
                               IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </GroupBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </GroupBox>
 
-                <!-- Department Filter -->
-                <GroupBox Header="Afdeling" Margin="0,0,0,10">
-                    <StackPanel>
-                        <ListBox ItemsSource="{Binding Departments}" SelectionMode="Multiple" SelectionChanged="DepartmentsListBox_SelectionChanged">
-                            <ListBox.Style>
-                                <Style TargetType="ListBox">
-                                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBox">
-                                                <ScrollViewer>
-                                                    <ItemsPresenter />
-                                                </ScrollViewer>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListBox.Style>
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Margin" Value="0,2,0,2"/>
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <ContentPresenter />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox Content="{Binding}" 
+                    <!-- Department Filter -->
+                    <GroupBox Header="Afdeling" Margin="0,0,0,10">
+                        <StackPanel>
+                            <ListBox ItemsSource="{Binding Departments}" SelectionMode="Multiple" SelectionChanged="DepartmentsListBox_SelectionChanged" MaxHeight="300">
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <ScrollViewer>
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.Style>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Margin" Value="0,2,0,2"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <ContentPresenter />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding}" 
                               Margin="5,2,0,2"
                               IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </GroupBox>
-            </StackPanel>
-        </ScrollViewer>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </ScrollViewer>
+            <Button x:Name="ButtonLogout" Content="Logout" Command="{Binding LogoutCommand}" 
+                HorizontalAlignment="Center" Margin="0,10,0,0" Height="40" Width="270" VerticalAlignment="Bottom"/>
+        </StackPanel>
 
         <ScrollViewer Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">

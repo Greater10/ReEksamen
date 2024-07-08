@@ -126,6 +126,7 @@ namespace DeltaProject.ViewModel
 
         public ICommand CreateTaskCommand { get; set; }
         public ICommand ResetDepartmentsFilterCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
 
         public static DepartmentRepository departmentRepository = new DepartmentRepository();
         public static EmployeeRepository employeeRepository = new EmployeeRepository();
@@ -152,6 +153,7 @@ namespace DeltaProject.ViewModel
 
             CreateTaskCommand = new RelayCommand(CreateTask);
             ResetDepartmentsFilterCommand = new RelayCommand(ResetDepartmentsFilter);
+            LogoutCommand = new RelayCommand(Logout);
         }
 
         private void RefreshDepartments(object sender, DbEventArgs e)
@@ -253,6 +255,13 @@ namespace DeltaProject.ViewModel
         private void ResetDepartmentsFilter(object parameter)
         {
             SelectedDepartments.Clear();
+        }
+
+        private void Logout(object parameter)
+        {
+            UserService.Instance.Logout();
+            WindowManager.OpenWindow<MainWindow, MainViewModel>(new MainViewModel());
+            WindowManager.CloseWindow<TasksWindow>();
         }
     }
 }
