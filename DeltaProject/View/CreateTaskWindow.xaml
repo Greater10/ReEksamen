@@ -5,63 +5,118 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeltaProject.View"
         mc:Ignorable="d"
-        Title="Opret Opgave" Height="500" Width="450" ResizeMode="NoResize"
+        Title="Opret Opgave" Height="465" Width="500" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Margin="10">
         <Grid.Resources>
             <DataTemplate DataType="{x:Type ValidationError}">
                 <TextBlock FontStyle="Italic" FontSize="10" Foreground="Red" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Path=ErrorContent}" />
             </DataTemplate>
         </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="CPR" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,26,0,0" />
-        <TextBox x:Name="CPRTextBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Width="280" Height="22" Text="{Binding Path=PatientSocialSecurityNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" Grid.Column="1" />
+        <!-- Patient name and CPR -->
+        <TextBlock Text="Patientnavn" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <TextBox x:Name="PatientNameTextBox" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Text="{Binding Path=PatientName}" />
+        <TextBlock Text="CPR" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <TextBox x:Name="CPRTextBox" Grid.Row="0" Grid.Column="3" Margin="5,5,5,5" Text="{Binding Path=PatientSocialSecurityNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
 
-        <TextBlock Text="Patientnavn" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,49,0,0" Grid.ColumnSpan="2" />
-        <TextBox x:Name="PatientNameTextBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,46,0,0" Width="280" Height="22" Text="{Binding Path=PatientName}" Grid.Column="1" />
-
-        <TextBlock Text="Afdeling" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,71,0,0" />
-        <ComboBox x:Name="Department" HorizontalAlignment="Left" Margin="50,71,0,0" VerticalAlignment="Top" Width="155" Height="24" Grid.Column="1" 
+        <!-- Department -->
+        <TextBlock Text="Afdeling" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <ComboBox x:Name="DepartmentComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,5,5,5" 
                   ItemsSource="{Binding Path=Departments}" SelectedItem="{Binding Path=SelectedDepartment}" />
-        <TextBox x:Name="Room" HorizontalAlignment="Left" Margin="210,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" Height="24" Grid.Column="1" 
-                 Text="{Binding Path=Room}" />
 
-        <TextBlock HorizontalAlignment="Left" Margin="15,106,0,0" TextWrapping="Wrap" Text="Isolationspatient" VerticalAlignment="Top" RenderTransformOrigin="0.576,-0.655" Grid.ColumnSpan="2"/>
-        <RadioButton x:Name="IsolationYes" Content="Ja" Margin="50,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Isolated, Mode=TwoWay}" />
-        <RadioButton x:Name="IsolationNo" Content="Nej" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="109,110,0,0" Grid.Column="1" IsChecked="{Binding Path=Isolated, Mode=TwoWay, Converter={StaticResource InverseBooleanConverter}}" />
+        <!-- Room / Bed -->
+        <TextBlock Text="Room" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <TextBox x:Name="RoomTextBox" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Text="{Binding Path=Room}" />
+        <TextBlock Text="Bed" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <TextBox x:Name="BedTextBox" Grid.Row="2" Grid.Column="3" Margin="5,5,5,5" Text="{Binding Path=Bed}" />
 
-        <TextBlock HorizontalAlignment="Left" Margin="20,146,0,0" TextWrapping="Wrap" Text="Prøver" VerticalAlignment="Top"/>
-        <CheckBox x:Name="BloodTest" Content="Blodprøve" HorizontalAlignment="Left" Margin="50,146,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=BloodTest, Mode=TwoWay}" />
-        <CheckBox Content="EKG" HorizontalAlignment="Left" Margin="50,166,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=EKG, Mode=TwoWay}" />
-        <CheckBox Content="Glukose-CSV" HorizontalAlignment="Left" Margin="50,186,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=GlukoseCSV, Mode=TwoWay}" />
-        <CheckBox Content="POCT-PCR" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=POCTPCR, Mode=TwoWay}" />
-        <CheckBox Content="Særlige OBS" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=SpecialObservation, Mode=TwoWay}" />
-        <CheckBox Content="Medicinafhængig prøvetagning" HorizontalAlignment="Left" Margin="147,166,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=MedicineDependentTest, Mode=TwoWay}" />
+        <!-- Isolated Patient -->
+        <TextBlock Text="Isolationspatient" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="5,5,5,5">
+            <RadioButton x:Name="IsolationYesRadioButton" Content="Ja" IsChecked="{Binding Path=Isolated, Mode=TwoWay}" />
+            <RadioButton x:Name="IsolationNoRadioButton" Content="Nej" IsChecked="{Binding Path=Isolated, Mode=TwoWay, Converter={StaticResource InverseBooleanConverter}}" Margin="5,0,0,0"/>
+        </StackPanel>
 
-        <TextBlock Text="Særlige forhold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Grid.ColumnSpan="2" />
-        <TextBox x:Name="SpecialMedication" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,235,0,0" Width="155" Height="22" Text="{Binding Path=SpecialMedication}" Grid.Column="1" />
+        <!-- Tests -->
+        <TextBlock Text="Prøver" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Margin="5,5,5,0" Height="16"/>
+        <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,10,5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <CheckBox x:Name="BloodTestCheckBox" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Path=BloodTest, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="Blodprøve" TextWrapping="Wrap"/>
+            </CheckBox>
+            <CheckBox x:Name="EKGCheckBox" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Path=EKG, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="EKG" TextWrapping="Wrap"/>
+            </CheckBox>
+            <CheckBox x:Name="GlukoseCSVCheckBox" Grid.Row="1" Grid.Column="0" IsChecked="{Binding Path=GlukoseCSV, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="Glukose-CSV" TextWrapping="Wrap"/>
+            </CheckBox>
+            <CheckBox x:Name="POCTPCRCheckBox" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=POCTPCR, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="POCT-PCR" TextWrapping="Wrap"/>
+            </CheckBox>
+            <CheckBox x:Name="SpecialObservationCheckBox" Grid.Row="2" Grid.Column="0" IsChecked="{Binding Path=SpecialObservation, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="Særlige OBS" TextWrapping="Wrap"/>
+            </CheckBox>
+            <CheckBox x:Name="MedicineDependentTestCheckBox" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Path=MedicineDependentTest, Mode=TwoWay}" Margin="0,0,5,0">
+                <TextBlock Text="Medicinafhængig prøvetagning" TextWrapping="Wrap"/>
+            </CheckBox>
+        </Grid>
 
-        <TextBlock Text="Inaktiv" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,280,0,0" />
-        <CheckBox x:Name="Inactive" Content="Inaktiv" HorizontalAlignment="Left" Margin="50,280,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Inactive, Mode=TwoWay}" />
+        <!-- Special Medication -->
+        <CheckBox x:Name="SpecialMedicationCheckBox" Content="Særlige forhold" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,5,0" IsChecked="{Binding Path=SpecialMedication}" Height="15" />
 
-        <TextBlock Text="Prioritet" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,301,0,0" />
-        <RadioButton x:Name="PriorityNormal" Content="Normal" HorizontalAlignment="Left" Margin="50,302,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=1}" />
-        <RadioButton x:Name="PriorityUrgent" Content="Haster" HorizontalAlignment="Left" Margin="121,301,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=2}" />
-        <RadioButton x:Name="PriorityCritical" Content="Kritisk" HorizontalAlignment="Left" Margin="190,301,0,0" VerticalAlignment="Top" Grid.Column="1" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=3}" />
+        <!-- Inactive -->
+        <TextBlock Text="Inaktiv" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <CheckBox x:Name="InactiveCheckBox" Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" IsChecked="{Binding Path=Inactive, Mode=TwoWay}" Content="" />
 
-        <TextBlock Text="Bestilt dato" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,322,0,0" Grid.ColumnSpan="2" />
-        <DatePicker x:Name="TaskDate" HorizontalAlignment="Left" Margin="50,322,0,0" VerticalAlignment="Top" Grid.Column="1" SelectedDate="{Binding Path=TaskDate, Mode=TwoWay}" />
+        <!-- Priority -->
+        <TextBlock Text="Prioritet" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <StackPanel Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="5,5,5,5">
+            <RadioButton x:Name="PriorityNormalRadioButton" Content="Normal" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=1}" Margin="0,0,5,0"/>
+            <RadioButton x:Name="PriorityUrgentRadioButton" Content="Haster" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=2}" Margin="0,0,5,0"/>
+            <RadioButton x:Name="PriorityCriticalRadioButton" Content="Kritisk" IsChecked="{Binding Path=Priority, Mode=TwoWay, Converter={StaticResource PriorityConverter}, ConverterParameter=3}" />
+        </StackPanel>
 
-        <TextBlock HorizontalAlignment="Left" Margin="20,363,0,0" TextWrapping="Wrap" Text="Kommentar" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="Comments" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,363,0,0" Width="280" Height="52" Text="{Binding Path=Comments}" Grid.Column="1" />
+        <!-- Order Date -->
+        <TextBlock Text="Bestilt dato" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Height="16"/>
+        <DatePicker x:Name="TaskDatePicker" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,5,5,5" SelectedDate="{Binding Path=TaskDate, Mode=TwoWay}" />
 
-        <Button Content="Opret" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="171,429,0,0" Width="70" Height="25" Command="{Binding Path=CreateCommand}" Grid.Column="1" />
-        <Button Content="Annuller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,429,0,0" Width="70" Height="25" Command="{Binding Path=CancelCommand}" Grid.Column="1" />
-        <TextBox x:Name="Bed" HorizontalAlignment="Left" Margin="271,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" Height="24" Grid.Column="1" 
-            Text="{Binding Bed}" />
+        <!-- Comments -->
+        <TextBlock Text="Kommentar" Grid.Row="9" Grid.Column="0" VerticalAlignment="Top" Margin="5,5,5,0" Height="16"/>
+        <TextBox x:Name="CommentsTextBox" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,0,5,0" Height="52" Text="{Binding Path=Comments}" VerticalAlignment="Center" />
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,20,5,5" Width="145">
+            <Button Content="Opret" Width="70" Height="25" Command="{Binding Path=CreateCommand}" Margin="0,0,5,0"/>
+            <Button Content="Annuller" Width="70" Height="25" Command="{Binding Path=CancelCommand}" />
+        </StackPanel>
     </Grid>
 </Window>
