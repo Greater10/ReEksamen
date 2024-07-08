@@ -23,5 +23,18 @@ namespace DeltaProject.View
                 }
             }
         }
+
+        private void DepartmentsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as TasksViewModel;
+            if (viewModel != null)
+            {
+                viewModel.SelectedDepartments.Clear();
+                foreach (var item in ((ListBox)sender).SelectedItems)
+                {
+                    viewModel.SelectedDepartments.Add(item.ToString());
+                }
+            }
+        }
     }
 }
