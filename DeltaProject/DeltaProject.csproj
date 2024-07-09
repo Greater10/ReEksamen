@@ -58,9 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanToYesNoConverter.cs" />
     <Compile Include="Converters\BoolListContainsConverter.cs" />
+    <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\PriorityConverter.cs" />
+    <Compile Include="Converters\PriorityToStringConverter.cs" />
     <Compile Include="Converters\SelectableItem.cs" />
     <Compile Include="Converters\TestTypeToIconConverter.cs" />
     <Compile Include="Converters\PriorityToColorConverter.cs" />
@@ -82,11 +85,14 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Commands\MessageEventArgs.cs" />
     <Compile Include="ViewModel\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModel\TaskDetailsViewModel.cs" />
     <Compile Include="ViewModel\TasksViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\TaskDetailViewModel.cs" />
     <Compile Include="View\CreateTaskWindow.xaml.cs">
       <DependentUpon>CreateTaskWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskDetailsWindow.xaml.cs">
+      <DependentUpon>TaskDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TasksWindow.xaml.cs">
       <DependentUpon>TasksWindow.xaml</DependentUpon>
@@ -107,6 +113,10 @@
     <Page Include="View\CreateTaskWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskDetailsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\TasksWindow.xaml">
       <SubType>Designer</SubType>

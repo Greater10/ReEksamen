@@ -13,5 +13,8 @@
         <conv:BoolListContainsConverter x:Key="BoolListContainsConverter"/>
         <conv:PriorityConverter x:Key="PriorityConverter"/>
         <conv:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <conv:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter"/>
+        <conv:PriorityToStringConverter x:Key="PriorityToStringConverter"/>
+        <conv:DateToStringConverter x:Key="DateToStringConverter"/>
     </Application.Resources>
 </Application>
