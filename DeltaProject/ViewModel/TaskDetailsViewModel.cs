@@ -44,8 +44,8 @@ namespace DeltaProject.ViewModel
             currentTask = task;
             LoadTaskDetails(task);
 
-            AssignToMeCommand = new RelayCommand(p => AssignToMe());
-            UnassignCommand = new RelayCommand(p => Unassign());
+            AssignToMeCommand = new RelayCommand(p => AssignToMe(), p => CanAssignToMe());
+            UnassignCommand = new RelayCommand(p => Unassign(), p => CanUnassign());
             CloseWindowCommand = new RelayCommand(p => CloseWindow());
         }
 
@@ -84,6 +84,16 @@ namespace DeltaProject.ViewModel
             currentTask.EmployeeId = null;
             taskRepository.Update(currentTask);
             WindowManager.CloseWindow<TaskDetailsWindow>();
+        }
+
+        private bool CanUnassign()
+        {
+            return currentTask.EmployeeId == userService.UserId;
+        }
+
+        private bool CanAssignToMe()
+        {
+            return currentTask.EmployeeId == null;
         }
 
         private void CloseWindow()
