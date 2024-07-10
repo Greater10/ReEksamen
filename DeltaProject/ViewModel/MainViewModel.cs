@@ -120,6 +120,7 @@ namespace DeltaProject.ViewModel
         {
             try
             {
+                // TODO - Bevist valg at bruge synkront kald så vi kan give hurtig feedback til brugeren
                 var employee = employeeRepository.ValidateLogin(email, password);
 
                 if (employee == null)

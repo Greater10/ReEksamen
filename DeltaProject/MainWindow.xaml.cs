@@ -18,6 +18,7 @@ namespace DeltaProject
             };
         }
 
+        // TODO - Burde bindes til en command i MainViewModel
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var viewModel = DataContext as MainViewModel;
